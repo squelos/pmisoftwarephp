@@ -4,7 +4,7 @@ body {
   padding: 0;
 }
 header {
-  height: 45px;
+  
 }
 .metro .page {
   width: 980px;
@@ -42,8 +42,7 @@ header {
   position: relative;
 }
 header {
-  height: 45px;
-  position: relative;
+ 
 }
 .introduce {
   height: 170px;
