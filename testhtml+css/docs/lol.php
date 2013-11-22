@@ -23,6 +23,7 @@
     <!-- Local JavaScript -->
     <script src="js/docs.js"></script>
     <script src="js/github.info.js"></script>
+    <script src="js/core.js"></script>
 
     <title>Metro UI CSS : Metro Bootstrap CSS Library</title>
 </head>

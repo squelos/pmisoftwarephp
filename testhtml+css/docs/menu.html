@@ -1,22 +1,22 @@
-<nav class="sidebar" style="width:150px;position:absolute; top:0px; left: 10px;">
+<nav class="sidebar" style="width:250px;position:absolute; top:100px; left: 10px;">
 <ul>
-<li class="title">Items Group 1</li>
-<li class="active"><a href="#"><i class="icon-home"></i>Dashboard</a></li>
-<li class="stick bg-red"><a href="#"><i class="icon-cog"></i>Layouts</a></li>
-<li class="stick bg-yellow">
-<a class="dropdown-toggle" href="#"><i class="icon-tree-view"></i>Sub menu</a>
-<ul class="dropdown-menu">
-<li><a href="">Subitem 1</a></li>
-<li><a href="">Subitem 2</a></li>
-<li><a href="">Subitem 3</a></li>
-<li class="divider"></li>
-<li><a href="">Subitem 4</a></li>
-<li class="disabled"><a href="">Subitem 4</a></li>
-</ul>
+<li class="title">TCP</li>
+<br>
+<br>
+<li class="active"><a href="#"><i class="icon-home"></i>Accueil</a></li>
+<li ><a href="#"><i class="icon-cog"></i>Profil</a></li>
+<li >
+	<a class="dropdown-toggle" href="#"><i class="icon-calendar"></i>Réservation</a>
+		<ul class="dropdown-menu">
+		<li><a href="">Subitem 1</a></li>
+		<li><a href="">Subitem 2</a></li>
+		<li><a href="">Subitem 3</a></li>
+		<li class="divider"></li>
+		<li><a href="">Subitem 4</a></li>
+		</ul>
 </li>
-<li class="stick bg-green"><a href="#">Thread item</a></li>
-<li class="disabled"><a href="#">Disabled item</a></li>
- 
+<li ><a href="#"><i class="icon-newspaper"></i>Actualités</a></li>
+ <!--
 <li class="title">Items Group 2</li>
 <li><a href="#">Other Item 1</a></li>
 <li><a href="#">Other item 2</a></li>
@@ -28,6 +28,33 @@
 <li><a href="">Subitem 2</a></li>
 <li><a href="">Subitem 3</a></li>
 </ul>
-</li>
+</li>-->
 </ul>
 </nav>
+
+<div class="logButton">
+<div class="tile bg-tcpOrange" onClick="showLogin();">
+            <div class="tile-content icon">
+                <i class="icon-user"></i>
+            </div>
+            <div class="tile-status">
+                <span class="name">Profil</span>
+            </div>
+        </div>
+</div>
+<div id="login">
+	<fieldset>
+                <legend>Connexion</legend>
+                <lable>Identifiant</lable>
+                <div class="input-control text" data-role="input-control">
+                    <input type="text" placeholder="type text">
+                    <button class="btn-clear" tabindex="-1"></button>
+                </div>
+                <lable>Mot de passe</lable>
+                <div class="input-control password" data-role="input-control">
+                    <input type="password" placeholder="type password" >
+                    <button class="btn-reveal" tabindex="-1"></button>
+                </div>
+                <input type="submit" value="Submit">
+            </fieldset>
+</div>
