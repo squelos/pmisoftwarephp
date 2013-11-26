@@ -42,19 +42,3 @@
             </div>
         </div>
 </div>
-<div id="login">
-	<fieldset>
-                <legend>Connexion</legend>
-                <lable>Identifiant</lable>
-                <div class="input-control text" data-role="input-control">
-                    <input type="text" placeholder="type text">
-                    <button class="btn-clear" tabindex="-1"></button>
-                </div>
-                <lable>Mot de passe</lable>
-                <div class="input-control password" data-role="input-control">
-                    <input type="password" placeholder="type password" >
-                    <button class="btn-reveal" tabindex="-1"></button>
-                </div>
-                <input type="submit" value="Submit">
-            </fieldset>
-</div>

@@ -1,3 +1,6 @@
+<?php
+include('functions.php');
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +32,12 @@
 </head>
 <body class="metro">
     <header class="bg-dark" data-load="footer.html"></header>
-	<?php include("menu.html"); ?>
+	<?php include("menu.php");?> 
+	<div id="login">
+		<fieldset id='fieldsetlogin'>
+	<?php include("fieldlogin.php"); ?>
+		</fieldset>
+	</div>
     <div class="page">
         <div class="page-region">
             <div class="page-region-content">
@@ -37,9 +45,20 @@
                     <a href="/"><i class="icon-arrow-left-3 fg-darker smaller"></i></a>
                     Accueil<small class="on-right">lolilol</small>
                 </h1>
-
+				
+				<?php
+					if(isset($_GET['loginerror'])){
+					?>
+				<div class="example" style='border-color:red;'>
+					<p>Votre email ou votre mot de passe ne sont pas correct ! </p>
+                </div>
+					
+					<?php
+					}
+				?>
                 <div class="example">
-					<p>coucou Vincent !</p>
+					<p>Bonjour l'accueil ! </p>
+					<p><?php echo ( isset($_SESSION['isConnected']) === true ? 'connecté' : 'pas connecté'); ?></p>
                 </div>
 
 
