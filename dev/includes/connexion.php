@@ -34,10 +34,10 @@ function connect($login, $mdp)
 
 		$_SESSION['isConnected'] = true;
 		$_SESSION['id'] = 1;
-		header('Location: index.php');
+		header('Location: ../index.php');
 	}
 	else{
-		header('Location: index.php?loginerror=true');
+		header('Location: ../index.php?loginerror=true');
 	}
 
 }
@@ -57,7 +57,7 @@ function connect($login, $mdp)
 function deconnect()
 {
 	session_unset();
-	header('Location: index.php');
+	header('Location: ../index.php');
 }
 
 ?>

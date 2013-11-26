@@ -1,5 +1,5 @@
 <?php
-include('functions.php');
+include('includes/functions.php');
  ?>
 <!DOCTYPE html>
 <html>
@@ -32,10 +32,10 @@ include('functions.php');
 </head>
 <body class="metro">
     <header class="bg-dark" data-load="footer.html"></header>
-	<?php include("menu.php");?> 
+	<?php include("includes/menu.php");?> 
 	<div id="login">
 		<fieldset id='fieldsetlogin'>
-	<?php include("fieldlogin.php"); ?>
+	<?php include("includes/fieldlogin.php"); ?>
 		</fieldset>
 	</div>
     <div class="page">
