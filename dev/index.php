@@ -14,6 +14,7 @@ include('includes/functions.php');
     <link href="css/docs.css" rel="stylesheet">
     <link href="js/prettify/prettify.css" rel="stylesheet">
 
+	
     <!-- Load JavaScript Libraries -->
     <script src="js/jquery/jquery.min.js"></script>
     <script src="js/jquery/jquery.widget.min.js"></script>
@@ -27,7 +28,9 @@ include('includes/functions.php');
     <script src="js/docs.js"></script>
     <script src="js/github.info.js"></script>
     <script src="js/core.js"></script>
+	
 
+	
     <title>Metro UI CSS : Metro Bootstrap CSS Library</title>
 </head>
 <body class="metro">

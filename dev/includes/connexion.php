@@ -1,6 +1,9 @@
 <?php
 include('functions.php');
 
+//On initialise la variable qui va renvoyer une réponse au JS
+$returnvalues= array();
+
 
 //On check si il ya  une demande de déconnexion
 $demandeDeconnexion = (isset($_GET['deconnect']) === true ? true : false); 
@@ -10,7 +13,7 @@ if ($demandeDeconnexion===true){
 	deconnect();
 }
 else{
-	connect(cleanGetVar($_POST['mail']), cleanGetVar($_POST['mdp']));
+	connect(cleanGetVar($_POST['mail']), cleanGetVar($_POST['pass']));
 }
 
 
@@ -28,16 +31,19 @@ else{
 */
 function connect($login, $mdp)
 {
+	global $returnvalues;
 	//temporaire juste pour tester
 	if($login=='test' AND $mdp=='test')
 	{
 
 		$_SESSION['isConnected'] = true;
 		$_SESSION['id'] = 1;
-		header('Location: ../index.php');
+		//header('Location: ../index.php');
+		$returnvalues['etatconnexion'] = "succes";
 	}
 	else{
-		header('Location: ../index.php?loginerror=true');
+		$returnvalues['etatconnexion'] = "erreur";
+		//header('Location: ../index.php?loginerror=true');
 	}
 
 }
@@ -54,10 +60,16 @@ function connect($login, $mdp)
 * @return		rien
 *
 */
+
+
 function deconnect()
 {
+	global $returnvalues;
 	session_unset();
+	$returnvalues['etatconnexion'] = "deconnecte";
 	header('Location: ../index.php');
 }
-
+//$returnvalues['etatconnexion'] = "erreur";
+//On émet le JASON
+echo json_encode($returnvalues);
 ?>
