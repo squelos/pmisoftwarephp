@@ -27,12 +27,12 @@ function jsconnect () {
 		var response =  jQuery.parseJSON(msg);
 		if(response.etatconnexion =="succes"){
 			$(".text-warning").hide();
-			$.Notify({
+			loginFieldRefresh();
+						$.Notify({
 				style : {background: 'green', color: 'black'},
 				position : 'bottom-right',
 				content:  "<p style='font-size:150%;'><i class='icon-checkmark'></i> L'indentification a réussi.</p>"
 			});
-			loginFieldRefresh();
 		}
 		else if(response.etatconnexion =="erreur"){
 			$("#ajaxload").show().fadeOut();
