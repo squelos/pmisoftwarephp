@@ -16,6 +16,16 @@
 		</ul>
 </li>
 <li ><a href="#"><i class="icon-newspaper"></i>Actualités</a></li>
+
+<?php if(isset($_SESSION['isConnected']) === true){ ?>
+<li>
+	<a class="dropdown-toggle" href="#"><i class="icon-key"></i>Administration</a>
+		<ul class="dropdown-menu">
+		<li><a href="admin.php?p=planning">Planning</a></li>
+		<li><a href="admin.php?p=newsletter">Newsletter</a></li>
+		</ul>
+</li>
+<?php } ?>
  <!--
 <li class="title">Items Group 2</li>
 <li><a href="#">Other Item 1</a></li>
