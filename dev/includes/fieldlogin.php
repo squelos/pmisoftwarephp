@@ -24,7 +24,7 @@ include_once('functions.php');
 					</div>
 					<label>Mot de passe</label>
 					<div class="input-control password" data-role="input-control">
-						<input type="password" placeholder="Mot de passe" name='mdp' id='mdpinput'>
+						<input type="password" placeholder="Mot de passe" name='mdp' id='mdpinput' onkeypress="return enterHandler(event)">
 						<button class="btn-reveal" tabindex="-1"></button>
 					</div>
 					<input id='connectsubmit' onClick="jsconnect()" type="submit" value="Valider" >

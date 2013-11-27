@@ -60,8 +60,6 @@ function connect($login, $mdp)
 * @return		rien
 *
 */
-
-
 function deconnect()
 {
 	global $returnvalues;
