@@ -62,8 +62,8 @@ function jsconnect () {
 *				
 */
 function loginFieldRefresh(){
-	$.get( "includes/fieldlogin.php", function( data ) {
-	  $( "#fieldsetlogin" ).html( data );
+	$.get( "index.php", function( data ) {
+	  $( "body" ).html( data );
 	});
 }
 
