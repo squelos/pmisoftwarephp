@@ -11,11 +11,7 @@
 	height:100%
 }
 html,body,* {
-	-webkit-box-sizing:border-box;
-	-moz-box-sizing:border-box;
-	-ms-box-sizing:border-box;
-	-o-box-sizing:border-box;
-	box-sizing:border-box
+
 }
 article,aside,details,figcaption,figure,footer,header,hgroup,nav,section {
 	display:block
@@ -31,16 +27,7 @@ html {
 	-webkit-text-size-adjust:100%;
 	-ms-text-size-adjust:100%
 }
-body {
-background: #ff6533; /* Old browsers */
-background: -moz-linear-gradient(left, #ff6533 0%, #ff6533 300px,#ffffff 40%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ff6533), #ff6533 250px,color-stop(40%,#ffffff)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(left, #ff6533 0%,#ff6533 300px,#ffffff 40%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(left, #ff6533 0%,#ff6533 300px,#ffffff 40%); /* Opera 11.10+ */
-background: -ms-linear-gradient(left, #ff6533 0%,#ff6533 300px,#ffffff 40%); /* IE10+ */
-background: linear-gradient(to right, #ff6533 0%,#ff6533 300px,#ffffff 40%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7f04', endColorstr='#ffb76b',GradientType=1 ); /* IE6-9 */
-}
+body {}
 
 a:hover,a:active,.tile:active {
 	outline:0

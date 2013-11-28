@@ -1,4 +1,4 @@
-<nav class="sidebar" style="width:250px;position:absolute; top:100px; left: 10px;">
+<nav class="sidebar" style="width:250px;position:absolute; padding-top:100px; padding-left: 10px;">
 <ul>
 <li class="title">TCP</li>
 <br>
