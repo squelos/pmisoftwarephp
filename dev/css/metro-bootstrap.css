@@ -27,7 +27,10 @@ html {
 	-webkit-text-size-adjust:100%;
 	-ms-text-size-adjust:100%
 }
-body {}
+body {
+	background-image: url("../images/background.jpg");
+	background-size: cover;
+}
 
 a:hover,a:active,.tile:active {
 	outline:0
@@ -297,7 +300,7 @@ a {
 	background-color:#eee!important
 }
 .metro .bg-tcpOrange {
-	background-color:#FF6533!important
+	background-color:#f5923D!important
 }
 .metro .fg-black {
 	color:#000!important
@@ -5523,7 +5526,7 @@ a {
 .metro .sidebar {
 	margin:0;
 	padding:0;
-	background-color:#ff6533;
+	
 	width:100%;
 	height:100%
 }
@@ -5556,7 +5559,7 @@ a {
 	padding:10px 20px;
 	text-decoration:none;
 	color:#eee;
-	background-color:#FE6738
+	background-color:#F5923D
 }
 .metro .sidebar>ul li a:hover {
 	background-color:white;
@@ -8576,6 +8579,20 @@ a {
 	padding : 20px;
 	border-style: solid;
 	border-width: 5px;
-	border-color: #FF6533;
+	border-color: #F5923D;
+	background-color: white;
 
+}
+
+#infoBook {
+	position : absolute ;
+	z-index: 1000;
+	top :0px ;
+	left : 0px ;
+	padding : 10px;
+	border-style: solid;
+	border-width: 5px;
+	border-color: #F5923D;
+	background-color: white;
+	display: none;
 }

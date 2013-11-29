@@ -1,11 +1,12 @@
-<nav class="sidebar" style="width:250px;position:absolute; padding-top:100px; padding-left: 10px;">
+<nav class="sidebar" style="width:275px;position:absolute; padding-top:100px; padding-left: 10px;">
 <ul>
-<li class="title">TCP</li>
+
 <br>
 <br>
 <li class="active"><a href="#"><i class="icon-home"></i>Accueil</a></li>
 <li ><a href="#"><i class="icon-cog"></i>Profil</a></li>
-<li >
+<li ><a href="booking.php"><i class="icon-calendar"></i>Réservation</a></li>
+<!--<li >
 	<a class="dropdown-toggle" href="#"><i class="icon-calendar"></i>Réservation</a>
 		<ul class="dropdown-menu">
 		<li><a href="">Subitem 1</a></li>
@@ -14,7 +15,7 @@
 		<li class="divider"></li>
 		<li><a href="">Subitem 4</a></li>
 		</ul>
-</li>
+</li>-->
 <li ><a href="#"><i class="icon-newspaper"></i>Actualités</a></li>
 
 <?php if(isset($_SESSION['isConnected']) === true){ ?>

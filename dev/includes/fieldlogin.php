@@ -27,7 +27,9 @@ include_once('functions.php');
 						<input type="password" placeholder="Mot de passe" name='mdp' id='mdpinput' onkeypress="return enterHandler(event)">
 						<button class="btn-reveal" tabindex="-1"></button>
 					</div>
-					<input id='connectsubmit' onClick="jsconnect()" type="submit" value="Valider" >
+					<br>
+					<br>
+					<input align="center" id='connectsubmit' onClick="jsconnect()" type="submit" value="Valider" >
 					<img src='images/ajax-loader.gif' alt='chargement en cours'  id='ajaxload' style='display:none;'/>
 				<!--</form>-->
 				<?php

@@ -31,7 +31,7 @@ include_once('includes/functions.php');
 	
 
 	
-    <title>Metro UI CSS : Metro Bootstrap CSS Library</title>
+    <title>Tennis Club Portois</title>
 </head>
 <body class="metro">
     <header class="bg-dark" data-load="footer.html"></header>
