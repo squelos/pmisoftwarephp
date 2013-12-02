@@ -1,14 +1,26 @@
 <?php include_once('header.php'); ?>
 <script type="text/javascript">
+var selectDate;
+var cal;
+//PB RECUPERATION DATE
 
-//Probleme event ->position souris sous Firefox, OK sur chrome...
+    $(function(){
+        cal=$(".calendar").calendar({
+            getDates : function(d) {
+                console.log('bite');
+                selectDate="";
+                selectDate = d;
+            }
+        }
+    );
+    })
+
      function selectField(id)
     {
         var mapP = $("#content");
         var mapPosition = mapP.position(); 
         var position = $("#field"+id).attr('coords').split(',');
         $("#infoBook").css({left:(parseFloat(position[4])+parseFloat(mapPosition.left))+'px',top:(parseFloat(position[5])+parseFloat(mapPosition.top))+'px'});
-        //$("#infoBook").css({left:position[4]+'px',top:position[5]+'px'});
         $("#infoBook").show();
     }
 
@@ -19,7 +31,8 @@
 
     function validBook()
     {
-        console.log($("#calendar").val());
+        cal.calendar('getDates');
+        console.log(selectDate);
     }
 </script>
     <div class="page">

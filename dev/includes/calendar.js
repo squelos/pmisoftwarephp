@@ -1,6 +1,6 @@
 $("#calendar").calendar({
 startMode: 'month',
-multiSelect: true
+multiSelect: false
 //click: function(){outputrefresh();}
 });
 
