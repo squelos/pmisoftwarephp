@@ -14,7 +14,7 @@
 */ 
  function cleanGetVar($inputVar)
  {
-   $inputVar = mysql_real_escape_string($inputVar); //Obsolète a partir de php 5.5.0
+   //$inputVar = mysql_real_escape_string($inputVar); //Obsolète a partir de php 5.5.0
    $inputVar = htmlspecialchars($inputVar, ENT_IGNORE, 'utf-8');
    $inputVar = strip_tags($inputVar);
    $inputVar = stripslashes($inputVar);

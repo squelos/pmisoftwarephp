@@ -20,6 +20,7 @@ include_once('includes/functions.php');
     <script src="js/jquery/jquery.widget.min.js"></script>
     <script src="js/jquery/jquery.mousewheel.js"></script>
     <script src="js/prettify/prettify.js"></script>
+    <script src="Datejs-all/build/date-fr-FR.js"></script>
 
     <!-- Metro UI CSS JavaScript plugins -->
     <script src="js/metro/metro-loader.js"></script>
