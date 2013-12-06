@@ -24,21 +24,21 @@
 				$("#infoBook").css({top : jsEvent.pageY+15,left : jsEvent.pageX-30});
 				$("#infoBook").show();
 			
-				console.log(date);
 				var day = date.getDate();
-				if (day.length<2) 
-				{
-					console.log("bite");
-					day="0"+day;
-				}
-				var month = date.getMonth();
+				day=day.toString();
+				if (day.length<2) day="0"+day;
+				var month = date.getMonth()+1;
+				month = month.toString();
+				if (month.length<2) month = "0"+month;
 				var year = date.getFullYear();
 				var displayDate = day+"/"+month+"/"+year;
-
 				var hour = date.getHours();
+				hour = hour.toString();
+				if (hour.length<2) hour="0"+hour;
 				var minute = date.getMinutes();
+				minute = minute.toString();
+				if (minute.length<2) minute = "0"+minute;
 				var displayHour = hour+":"+minute;
-
 				$("#date").val(displayDate);
 				$("#time").val(displayHour);
 			}
@@ -60,9 +60,9 @@
             <div id="infoBook" class="balloon bottom">
                 <a href="#" onclick="closeCalendar();"><i class="icon-cancel" style="float:right"></i></a>
                 <br>
-                <input type="text" placeholder="Date" name='date' id='date'>
+                <input type="text" placeholder="Date" name='date' id='date' disabled>
                 <br>
-                <input type="text" placeholder="Heure" name='time' id='time'>
+                <input type="text" placeholder="Heure" name='time' id='time' disabled>
                 <br>
                 <label>Joueur 1</label>
                 Jean
