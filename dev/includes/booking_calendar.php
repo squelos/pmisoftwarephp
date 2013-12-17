@@ -1,4 +1,7 @@
-<?php include_once('header.php'); ?>
+<?php 
+	include_once('header.php'); 
+	include_once('functions.php');
+?>
 <link rel='stylesheet' type='text/css' href='fullcalendar-1.6.4/fullcalendar/fullcalendar.css' />
 <script type='text/javascript' src='fullcalendar-1.6.4/lib/jquery.min.js'></script>
 <script type='text/javascript' src='fullcalendar-1.6.4/fullcalendar/fullcalendar.js'></script>
@@ -49,6 +52,17 @@
     {
         $("#infoBook").hide();
     }
+
+    function validBook()
+    {
+    	var player1 = $("#player1").val();
+    	var player2 = $("#player2").val();
+    	var date = $("#date").val();
+    	var hour = $("#hour").val();
+    	var court = $("#field").val();
+
+    	maj("includes/check_booking.php?p1="+player1+"&p2="+player2+"&d="+date+"&h="+hour+"&c="+court,"bookOk");
+    }
 </script>
 <div class="page">
 	<div class="page-region">
@@ -58,22 +72,38 @@
                 Réservation
             </h1>
             <div id="infoBook" class="balloon bottom">
+            	<input type="text" id="field" value="<?php echo $_GET['field']; ?>" style="display:none;"/>
                 <a href="#" onclick="closeCalendar();"><i class="icon-cancel" style="float:right"></i></a>
                 <br>
-                <input type="text" placeholder="Date" name='date' id='date' disabled>
+                <input type="text" placeholder="Date" name='date' id='date' disabled />
                 <br>
-                <input type="text" placeholder="Heure" name='time' id='time' disabled>
+                <input type="text" placeholder="Heure" name='time' id='time' disabled />
                 <br>
-                <label>Joueur 1</label>
-                Jean
+                <br>
+                <div style="float:left;">
+                <label>Joueur 1</label><br>
+                <input type="text" placeholder="player1" name="player1" id="player1" value="1" disabled/>
                 <label>Joueur 2</label>
                 <select>
-                		<option value="bite">Bono</option>
-                		<option value="bite2">Roger</option>
+                	<?php
+                	$db = new db();
+
+                		$players = $db->listPlayers();
+                		while($result=mssql_fetch_array($players))
+                		{
+                			echo '<option value="'.$result['ID'].'">'.$result['lastName']." ".$result['firstName'].'</option>';
+                		}
+                	?>
                 </select>
+                </div>
+                <div style="float:left">
+                	<input type="checkbox" id="camera" name="video" style="vertical-align:middle;"> Séance filmée
+                </div>
+                <div style="clear:both;"> </div>
                 <br>
                 <br>
                 <input id='connectsubmit' onClick="validBook()" type="submit" value="Réserver" >
+                <div id="bookOk"></div>
             </div>
 			<div id="calendar"></div>
 		</div>

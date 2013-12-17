@@ -18,7 +18,7 @@ class db{
 		
 	}
 	
-	private function query($sttm){
+	public function query($sttm){
 		$version = mssql_query($sttm);
 		return $version;
 		mssql_free_result($version);
@@ -43,6 +43,22 @@ class db{
 			$rtrnArray[]=$row['number'];
 		}
 		return $rtrnArray;
+	}
+
+	public function listPlayers(){
+		$resultats = $this->query('SELECT * 
+						FROM PlayerJeu
+						ORDER BY lastName ASC');
+		return $resultats;
+	}
+
+	public function searchPlayers($search)
+	{
+		$resultats = $this->query('SELECT *
+						FROM PlayerJeu
+						WHERE firstName LIKE "%'.$search.'%"
+						OR lastName LIKE "%'.$search.'%"');
+		return $resultats;
 	}
 	
 }
