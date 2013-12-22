@@ -9,13 +9,14 @@ include_once('includes/functions.php');
     <meta name="description" content="Simple responsive css framework">
     <meta name="author" content="Sergey S. Pimenov, Ukraine, Kiev">
 
+
+
     <link href="css/metro-bootstrap.css" rel="stylesheet">
     <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
     <link href="css/docs.css" rel="stylesheet">
     <link href="js/prettify/prettify.css" rel="stylesheet">
 
-	
-    <!-- Load JavaScript Libraries -->
+<!-- Load JavaScript Libraries -->    
     <script src="js/jquery/jquery.min.js"></script>
     <script src="js/jquery/jquery.widget.min.js"></script>
     <script src="js/jquery/jquery.mousewheel.js"></script>
@@ -24,6 +25,7 @@ include_once('includes/functions.php');
 
     <!-- Metro UI CSS JavaScript plugins -->
     <script src="js/metro/metro-loader.js"></script>
+    <script src="js/metro/metro-notify.js"></script>
 
     <!-- Local JavaScript -->
     <script src="js/docs.js"></script>

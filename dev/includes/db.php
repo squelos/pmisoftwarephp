@@ -18,8 +18,8 @@ class db{
 		
 	}
 	
-	public function query($sttm){
-		$version = mssql_query($sttm);
+	public function query($sttm,$name){
+		$version = mssql_query($sttm) or die($sttm);
 		return $version;
 		mssql_free_result($version);
 	}
@@ -48,7 +48,7 @@ class db{
 	public function listPlayers(){
 		$resultats = $this->query('SELECT * 
 						FROM PlayerJeu
-						ORDER BY lastName ASC');
+						ORDER BY lastName ASC','listPlayers');
 		return $resultats;
 	}
 
@@ -57,7 +57,7 @@ class db{
 		$resultats = $this->query('SELECT *
 						FROM PlayerJeu
 						WHERE firstName LIKE "%'.$search.'%"
-						OR lastName LIKE "%'.$search.'%"');
+						OR lastName LIKE "%'.$search.'%"','searchPlayers');
 		return $resultats;
 	}
 	

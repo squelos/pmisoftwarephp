@@ -66,8 +66,8 @@ var defaults = {
 	dayNames: ['Dimange','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
 	dayNamesShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
 	buttonText: {
-		prev: "<span class='fc-text-arrow'>&lsaquo;</span>",
-		next: "<span class='fc-text-arrow'>&rsaquo;</span>",
+		prev: "<span class='fc-text-arrow' id='prev'>&lsaquo;</span>",
+		next: "<span class='fc-text-arrow' id='next'>&rsaquo;</span>",
 		prevYear: "<span class='fc-text-arrow'>&laquo;</span>",
 		nextYear: "<span class='fc-text-arrow'>&raquo;</span>",
 		today: 'Aujourd\'hui',
@@ -583,11 +583,13 @@ function Calendar(element, options, eventSources) {
 	
 	function prev() {
 		renderView(-1);
+		closeCalendar();
 	}
 	
 	
 	function next() {
 		renderView(1);
+		closeCalendar();
 	}
 	
 	
