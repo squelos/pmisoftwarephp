@@ -32,8 +32,8 @@ if ($action=="update")
 	$id = $_GET['id'];
 	$idBook = split('-', $id);
 
-	$player1 = $idBook[1];
-	$player2 = $idBook[2];
+	$player1 = cleanGetVar($_GET['p1']);
+	$player2 = cleanGetVar($_GET['p2']);
 	$date = cleanGetVar($_GET["d"]);
 	$hour = cleanGetVar($_GET["h"]);
 	$court = cleanGetVar($_GET["c"]);
@@ -42,4 +42,6 @@ if ($action=="update")
 	$date = substr($date, 6,10)."-".substr($date,3,2)."-".substr($date, 0,2)." ".$hour.":00";
 
 	$db->query("UPDATE BookingJeu SET start='".$date."',Player1_ID='".$player1."', Player2_ID='".$player2."',Filmed='".$camera."' WHERE ID=".$idBook[0],'update event');
+
+	echo utf8_encode('Mise à jour effectuée.');
 }

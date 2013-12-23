@@ -61,12 +61,22 @@ var selectedEvent;
             eventClick : function(date,allDay,jsEvent,view) {
                 var sessionId = <?php echo $_SESSION['id']; ?>;
                 var eventId = date['id'];
+                console.log(eventId);
                 eventId = eventId.split('-');
 
                 if (sessionId==eventId[1])
                 {
+                    if (eventId[3]==0)
+                    {
+                        $("#camera").prop('checked',false);
+                    }
+                    else
+                    {
+                        $("#camera").prop('checked',true);
+                    }
                     $("#bookOk").html("");
                     $("#newEvent").hide();
+                    $("#player2").val(eventId[2]);
                     $("#modifyEvent").show();                 
                     selectedEvent = date['id'];
                     $("#date").val(date['start'].toString("dd/MM/yyyy"));
@@ -182,8 +192,8 @@ var selectedEvent;
                 <a href="/"><i class="icon-arrow-left-3 fg-darker smaller"></i></a>
                 Réservation
             </h1>
-           <!-- <div id="notifDiv" style="display:none;"></div>-->
-           <div id="notifDiv" ></div>
+            <div id="notifDiv" style="display:none;"></div>
+           <!--<div id="notifDiv" ></div>-->
             <div id="infoBook" class="balloon bottom">
             	<input type="text" id="field" value="<?php echo $_GET['field']; ?>" style="display:none;"/>
                 <a href="#" onclick="closeCalendar();"><i class="icon-cancel" style="float:right"></i></a>
