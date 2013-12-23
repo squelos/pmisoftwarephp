@@ -30,6 +30,8 @@ var selectedEvent;
 			minTime : '8:00',
 			maxTime : '23:59',
 			timeFormat:'HH:mm',
+            allDaySlot : false,
+            axisFormat : 'HH:mm',
 
 			dayClick : function(date,allDay,jsEvent,view) {
              
