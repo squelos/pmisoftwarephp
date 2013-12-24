@@ -102,7 +102,7 @@ var selectedEvent;
     function notifyUser()
     {
         var contentUser = $("#notifDiv").html();
-        $(document).notify({
+        $.Notify({
             content : contentUser
         })
     }

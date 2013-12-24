@@ -15,7 +15,7 @@ if ($action=="start")
 
 	$db->query('UPDATE BookingJeu SET start="'.$start.'", [end]="'.$end.'" WHERE ID='.$idBook[0],'update start');
 
-	echo utf8_encode("Mise Ã  jour effectuÃ©e");
+	echo utf8_encode("Mise à  jour effectuée");
 }
 
 if ($action=="delete")
