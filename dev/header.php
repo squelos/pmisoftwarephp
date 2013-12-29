@@ -26,6 +26,8 @@ include_once('includes/functions.php');
     <!-- Metro UI CSS JavaScript plugins -->
     <script src="js/metro/metro-loader.js"></script>
     <script src="js/metro/metro-notify.js"></script>
+    <script src="js/metro/metro-calendar.js"></script>
+    <script src="js/metro/metro-datepicker.js"></script>
 
     <!-- Local JavaScript -->
     <script src="js/docs.js"></script>

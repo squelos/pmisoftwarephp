@@ -3,8 +3,8 @@
 
 <br>
 <br>
-<li class="active"><a href="#"><i class="icon-home"></i>Accueil</a></li>
-<li ><a href="#"><i class="icon-cog"></i>Profil</a></li>
+<li class="active"><a href="index.php"><i class="icon-home"></i>Accueil</a></li>
+<li ><a href="profile.php"><i class="icon-cog"></i>Profil</a></li>
 <li ><a href="booking.php?p=fields"><i class="icon-calendar"></i>Réservation</a></li>
 <!--<li >
 	<a class="dropdown-toggle" href="#"><i class="icon-calendar"></i>Réservation</a>

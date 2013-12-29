@@ -20,9 +20,12 @@
                 <div class="example">
 					<p>Bonjour l'accueil ! </p>
 					<p><?php echo ( isset($_SESSION['isConnected']) === true ? 'connecté' : 'pas connecté'); ?></p>
+
                 </div>
 
 
             </div>
         </div>
+        <script type="text/javascript">
+        $("#datepicker").datepicker();</script>
 <?php include_once('footer.php'); ?>

@@ -1,18 +1,39 @@
 <?php 
 @session_start();
 
+$_SESSION['isAdmin'] = "false";
 if (isset($_SESSION['isConnected']))
 {
 	include_once('header.php'); 
 	include_once('functions.php');
+
+    $db = new db();
+    $result = $db->query('SELECT statusName FROM StatusSet,PlayerJeu WHERE StatusSet.Id=PlayerJeu.Status_Id AND PlayerJeu.ID='.$_SESSION['id'],'droits admin');
+    
+    if (mssql_result($result, 0, 'statusName')=="Administrateur")
+    {
+        $_SESSION['isAdmin'] = "true";
+    }
 ?>
 <link rel='stylesheet' type='text/css' href='fullcalendar-1.6.4/fullcalendar/fullcalendar.css' />
 <script type='text/javascript' src='fullcalendar-1.6.4/lib/jquery.min.js'></script>
 <script type='text/javascript' src='fullcalendar-1.6.4/lib/jquery-ui.custom.min.js'></script>
 <script type='text/javascript' src='fullcalendar-1.6.4/fullcalendar/fullcalendar.js'></script>
+<script src="js/metro/metro-calendar.js"></script>
+<script src="js/metro/metro-datepicker.js"></script>
+<script src="js/metro/metro-dialog.js"></script>
+<script src="js/metro/metro-notify.js"></script>
 <script type="text/javascript">
 var courtParam =  new RegExp('[\\?&]field=([^&#]*)').exec(window.location.href);
 var selectedEvent;
+var isAdmin = false;
+
+<?php
+    if ($_SESSION['isAdmin']=="true")
+    {
+        echo 'isAdmin=true;';
+    }
+?>
 
 	$(document).ready(function() {
 		$("#calendar").fullCalendar({
@@ -32,9 +53,17 @@ var selectedEvent;
 			timeFormat:'HH:mm',
             allDaySlot : false,
             axisFormat : 'HH:mm',
+            slotEventOverlap : false,
 
 			dayClick : function(date,allDay,jsEvent,view) {
-             
+                
+                if (isAdmin==true)
+                {
+                    $("#recurrent").show();
+                }
+                else{
+                    $("#recurrent").hide();
+                }
                 $("#bookOk").html('');
                 $("#newEvent").show();
                 $("#modifyEvent").hide();
@@ -63,10 +92,11 @@ var selectedEvent;
             eventClick : function(date,allDay,jsEvent,view) {
                 var sessionId = <?php echo $_SESSION['id']; ?>;
                 var eventId = date['id'];
-                console.log(eventId);
                 eventId = eventId.split('-');
 
-                if (sessionId==eventId[1])
+                 $("#recurrent").hide();
+
+                if ((sessionId==eventId[1]) || (isAdmin==true))
                 {
                     if (eventId[3]==0)
                     {
@@ -92,36 +122,92 @@ var selectedEvent;
                 var start = date['start'].toString("yyyy-MM-dd HH:mm:ss");
                 var end = date['end'].toString("yyyy-MM-dd HH:mm:ss");
               //  maj("update_booking.php?action=start&s="+start+"&e="+end+"&i="+date['id'],"notifDiv","notifyUser();");
-                maj("includes/update_booking.php?action=start&s="+start+"&e="+end+"&i="+date['id'],"notifDiv");
+                var eventId = date['id'];
+                eventId = eventId.split('-');
+                var id = date['id'];
+
+                if (eventId[4]==0)
+                {
+                    upStart('unique',start,end,id);
+                    
+                }
+                else 
+                {
+                    //Aggregation d'events, demander confirmation si modif unique ou aggreg
+                      $.Dialog({
+                            overlay: true,
+                            shadow: true,
+                            flat: true,
+                            padding : 20,
+                            title: 'Confirmation', 
+                            content : 'Souhaitez-vous appliquer la modification à un seul événement ou à toute la collection ?<br><br><div style="margin:auto;text-align:center;"><input type="submit" value="Unique" onclick="upStart(\'unique\',\''+start+'\',\''+end+'\',\''+id+'\');" />    <input type="submit" value="Tous" onclick="upStart(\'all\',\''+start+'\',\''+end+'\',\''+id+'\');" /></div>',
+                            sysButtons:{
+                                btnClose : true
+                            }
+                          
+                        });
+                }
                 
             },
 		})
         fetchEvents();
 	});
 
+    function upStart(type,start,end,id)
+    {
+        $.Dialog.close();
+        maj("includes/update_booking.php?action=start&type="+type+"&s="+start+"&e="+end+"&i="+id,"notifDiv","notifyUser();");
+    }
+
     function notifyUser()
     {
         var contentUser = $("#notifDiv").html();
         $.Notify({
-            content : contentUser
+            content : contentUser,
+            position : 'bottom-right'
         })
     }
 
 	function closeCalendar()
     {
+        $("#recurrent").hide();
         $("#infoBook").hide();
         $("#remove").hide();
     }
 
     function deleteEvent()
     {
-        maj('includes/update_booking.php?action=delete&id='+selectedEvent,"notifDiv","fetchEvents();closeCalendar();");
-        
+        var eventId = selectedEvent.split('-');
+        if (eventId[4]==0)
+                {
+                    del('unique',selectedEvent);  
+                }
+                else 
+                {
+                    //Aggregation d'events, demander confirmation si modif unique ou aggreg
+                      $.Dialog({
+                            overlay: true,
+                            shadow: true,
+                            flat: true,
+                            padding : 20,
+                            title: 'Confirmation', 
+                            content : 'Souhaitez-vous appliquer la modification à un seul événement ou à toute la collection ?<br><br><div style="margin:auto;text-align:center;"><input type="submit" value="Unique" onclick="del(\'unique\',\''+selectedEvent+'\');" />    <input type="submit" value="Tous" onclick="del(\'all\',\''+selectedEvent+'\');" /></div>',
+                            sysButtons:{
+                                btnClose : true
+                            }
+                          
+                        });
+                }        
+    }
+
+    function del(type,id)
+    {
+        maj('includes/update_booking.php?action=delete&type='+type+'&id='+id,"notifDiv","fetchEvents();closeCalendar();notifyUser();");
+        $.Dialog.close();
     }
 
     function updateEvent()
     {
-        console.log(selectedEvent);
         var player1 = $("#player1").val();
         var player2 = $("#player2").val();
         var date = $("#date").val();
@@ -129,7 +215,7 @@ var selectedEvent;
         var court = $("#field").val();
         var camera = $("#camera").prop("checked");
 
-        maj('includes/update_booking.php?action=update&id='+selectedEvent+'&p1='+player1+'&p2='+player2+'&d='+date+'&h='+hour+'&c='+court+'&cam='+camera,"notifDiv","fetchEvents();");
+        maj('includes/update_booking.php?action=update&id='+selectedEvent+'&p1='+player1+'&p2='+player2+'&d='+date+'&h='+hour+'&c='+court+'&cam='+camera,"notifDiv","fetchEvents();notifyUser();");
         
     }
 
@@ -141,8 +227,19 @@ var selectedEvent;
     	var hour = $("#hour").val();
     	var court = $("#field").val();
         var camera = $("#camera").prop("checked");
-        
-    	maj("includes/check_booking.php?p1="+player1+"&p2="+player2+"&d="+date+"&h="+hour+"&c="+court+"&cam="+camera,"bookOk","checkBook();");
+        var recurrent = $("#checkRecurrent").prop("checked");
+
+        if(recurrent==true)
+        {
+            var dateRecurrent = $("#recurrentPicker").val();
+            var bookName = $("#bookName").val();
+            maj("includes/check_booking.php?action=recurrent&dr="+dateRecurrent+"&bn="+bookName+"&p1="+player1+"&p2="+player2+"&d="+date+"&h="+hour+"&c="+court+"&cam="+camera,"notifDiv","checkBook();notifyUser();fetchEvents();");
+     
+        }
+        else
+        {
+    	   maj("includes/check_booking.php?action=classic&p1="+player1+"&p2="+player2+"&d="+date+"&h="+hour+"&c="+court+"&cam="+camera,"notifDiv","checkBook();notifyUser();fetchEvents();");
+        }
     }
 
     function checkBook()
@@ -186,8 +283,22 @@ var selectedEvent;
         $("#calendar").fullCalendar('refetchEvents');
     }
 
+    function showRecurrent(object)
+    {
+        var val = $("#"+object.id).prop('checked');
+
+        if (val==true)
+        {
+            $("#recurrentDate").show();
+        }
+        else
+        {
+            $("#recurrentDate").hide();
+        }
+    }
+
 </script>
-<div class="page">
+<div class="page" >
 	<div class="page-region">
 	    <div class="page-region-content">
 	   		<h1>
@@ -225,6 +336,25 @@ var selectedEvent;
                 <div style="float:left">
                 	<input type="checkbox" id="camera" name="video" style="vertical-align:middle;"> Séance filmée
                 </div>
+                <div style="clear:both;"></div>
+                <?php
+                if ($_SESSION['isAdmin']==true)
+                {
+                    echo '<div id="recurrent" style="display:none;width:90%;">
+                            <input type="checkbox" id="checkRecurrent" style="vertical-align:middle;" onChange="showRecurrent(this);">Réservation récurrente
+                           <div id="recurrentDate"  style="display:none;">
+                           Nom réservation :
+                           <input type="text" id="bookName" /><br>
+                                Jusqu\'à : 
+                            <br>
+                            <div class="input-control text" id="timePicker" >
+                                <input type="text" id="recurrentPicker">
+                                <button class="btn-date"></button>
+                            </div>
+                            </div>
+                            </div>';
+                }
+                ?>
                 <div style="clear:both;"> </div>
                 <br>
                 <br>
@@ -244,6 +374,16 @@ var selectedEvent;
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+var d = new Date();
+
+    $("#timePicker").datepicker({
+        date:d,
+        format:"dd/mm/yyyy",
+        locale:'fr',
+        start:1
+    });
+</script>
 <?php
 }
 else
