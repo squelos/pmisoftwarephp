@@ -3,7 +3,7 @@
 
 <br>
 <br>
-<li class="active"><a href="index.php"><i class="icon-home"></i>Accueil</a></li>
+<li ><a href="index.php"><i class="icon-home"></i>Accueil</a></li>
 <li ><a href="profile.php"><i class="icon-cog"></i>Profil</a></li>
 <li ><a href="booking.php?p=fields"><i class="icon-calendar"></i>Réservation</a></li>
 <!--<li >
@@ -16,14 +16,15 @@
 		<li><a href="">Subitem 4</a></li>
 		</ul>
 </li>-->
-<li ><a href="#"><i class="icon-newspaper"></i>Actualités</a></li>
+<li ><a href="news.php"><i class="icon-newspaper"></i>Actualités</a></li>
+<li ><a href="stats.php"><i class="icon-stats"></i>Statistiques</a></li>
 
 <?php if(isset($_SESSION['isConnected']) === true){ ?>
 <li>
 	<a class="dropdown-toggle" href="#"><i class="icon-key"></i>Administration</a>
 		<ul class="dropdown-menu">
-		<li><a href="admin.php?p=planning">Planning</a></li>
-		<li><a href="admin.php?p=newsletter">Newsletter</a></li>
+		<li ><a href="newsletter.php">Newsletter</a></li>
+		<li ><a href="admin_news.php">Actualités</a></li>
 		</ul>
 </li>
 <?php } ?>

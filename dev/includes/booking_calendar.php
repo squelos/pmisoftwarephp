@@ -56,37 +56,53 @@ var isAdmin = false;
             slotEventOverlap : false,
 
 			dayClick : function(date,allDay,jsEvent,view) {
-                
-                if (isAdmin==true)
+                var endDate = new Date(date);
+                endDate.setHours(endDate.getHours()+1);
+               
+                var todaysEvents = $('#calendar').fullCalendar('clientEvents', function(event) {
+                       return checkAvailable(date,endDate,event.start,event.end);
+                });
+
+                if (todaysEvents.length>0)
                 {
-                    $("#recurrent").show();
+                   $("#notifDiv").html('Créneau indisponible');
+                   notifyUser();
+                   fetchEvents();
                 }
-                else{
-                    $("#recurrent").hide();
+                else
+                {
+                    console.log(todaysEvents.length);
+                    if (isAdmin==true)
+                    {
+                        $("#recurrent").show();
+                    }
+                    else{
+                        $("#recurrent").hide();
+                    }
+                    $("#bookOk").html('');
+                    $("#newEvent").show();
+                    $("#modifyEvent").hide();
+    				$("#infoBook").css({top : jsEvent.pageY+15,left : jsEvent.pageX-30});
+    				$("#infoBook").show();
+    			
+    				var day = date.getDate();
+    				day=day.toString();
+    				if (day.length<2) day="0"+day;
+    				var month = date.getMonth()+1;
+    				month = month.toString();
+    				if (month.length<2) month = "0"+month;
+    				var year = date.getFullYear();
+    				var displayDate = day+"/"+month+"/"+year;
+    				var hour = date.getHours();
+    				hour = hour.toString();
+    				if (hour.length<2) hour="0"+hour;
+    				var minute = date.getMinutes();
+    				minute = minute.toString();
+    				if (minute.length<2) minute = "0"+minute;
+    				var displayHour = hour+":"+minute;
+    				$("#date").val(displayDate);
+    				$("#hour").val(displayHour);
                 }
-                $("#bookOk").html('');
-                $("#newEvent").show();
-                $("#modifyEvent").hide();
-				$("#infoBook").css({top : jsEvent.pageY+15,left : jsEvent.pageX-30});
-				$("#infoBook").show();
-			
-				var day = date.getDate();
-				day=day.toString();
-				if (day.length<2) day="0"+day;
-				var month = date.getMonth()+1;
-				month = month.toString();
-				if (month.length<2) month = "0"+month;
-				var year = date.getFullYear();
-				var displayDate = day+"/"+month+"/"+year;
-				var hour = date.getHours();
-				hour = hour.toString();
-				if (hour.length<2) hour="0"+hour;
-				var minute = date.getMinutes();
-				minute = minute.toString();
-				if (minute.length<2) minute = "0"+minute;
-				var displayHour = hour+":"+minute;
-				$("#date").val(displayDate);
-				$("#hour").val(displayHour);
 			},
 
             eventClick : function(date,allDay,jsEvent,view) {
@@ -126,33 +142,53 @@ var isAdmin = false;
                 eventId = eventId.split('-');
                 var id = date['id'];
 
-                if (eventId[4]==0)
-                {
-                    upStart('unique',start,end,id);
-                    
-                }
-                else 
-                {
-                    //Aggregation d'events, demander confirmation si modif unique ou aggreg
-                      $.Dialog({
-                            overlay: true,
-                            shadow: true,
-                            flat: true,
-                            padding : 20,
-                            title: 'Confirmation', 
-                            content : 'Souhaitez-vous appliquer la modification à un seul événement ou à toute la collection ?<br><br><div style="margin:auto;text-align:center;"><input type="submit" value="Unique" onclick="upStart(\'unique\',\''+start+'\',\''+end+'\',\''+id+'\');" />    <input type="submit" value="Tous" onclick="upStart(\'all\',\''+start+'\',\''+end+'\',\''+id+'\');" /></div>',
-                            sysButtons:{
-                                btnClose : true
-                            }
-                          
-                        });
+                 var todaysEvents = $('#calendar').fullCalendar('clientEvents', function(event) {
+                        return checkAvailable(date['start'],date['end'],event.start,event.end);
+                   });
+
+                 if (todaysEvents.length>1)
+                 {
+                    $("#notifDiv").html('Créneau indisponible');
+                    notifyUser();
+                    fetchEvents();
+                 }
+                 else
+                 {
+                    if (eventId[4]==0)
+                    {
+                        upStart('unique',start,end,id);
+                    }
+                    else 
+                    {
+                        //Aggregation d'events, demander confirmation si modif unique ou aggreg
+                        $.Dialog({
+                              overlay: true,
+                              shadow: true,
+                              flat: true,
+                              padding : 20,
+                              title: 'Confirmation', 
+                              content : 'Souhaitez-vous appliquer la modification à un seul événement ou à toute la collection ?<br><br><div style="margin:auto;text-align:center;"><input type="submit" value="Unique" onclick="upStart(\'unique\',\''+start+'\',\''+end+'\',\''+id+'\');" />    <input type="submit" value="Tous" onclick="upStart(\'all\',\''+start+'\',\''+end+'\',\''+id+'\');" /></div>',
+                              sysButtons:{
+                                  btnClose : true
+                              }  
+                          });
+                    }
                 }
                 
             },
 		})
         fetchEvents();
 	});
-
+    
+    function checkAvailable(start,end,start2,end2)
+    {
+        var available = false;
+        if (((start>=start2)&&(start<end2))||((end>start2)&&(end<end2)))
+        {
+            available = true;
+        }
+        return available;
+    }
     function upStart(type,start,end,id)
     {
         $.Dialog.close();
@@ -303,11 +339,11 @@ var isAdmin = false;
 	    <div class="page-region-content">
 	   		<h1>
                 <a href="/"><i class="icon-arrow-left-3 fg-darker smaller"></i></a>
-                Réservation
+                Réservation - Court n°<?php echo $_GET['field']; ?>
             </h1>
             <div id="notifDiv" style="display:none;"></div>
            <!--<div id="notifDiv" ></div>-->
-            <div id="infoBook" class="balloon bottom">
+            <div id="infoBook" class="balloon bottom" style="padding:20px;">
             	<input type="text" id="field" value="<?php echo $_GET['field']; ?>" style="display:none;"/>
                 <a href="#" onclick="closeCalendar();"><i class="icon-cancel" style="float:right"></i></a>
                 <br>
@@ -325,7 +361,7 @@ var isAdmin = false;
                 	<?php
                 	$db = new db();
 
-                		$players = $db->listPlayers();
+                		$players = $db->listEnabledPlayers();
                 		while($result=mssql_fetch_array($players))
                 		{
                 			echo '<option value="'.$result['ID'].'">'.$result['lastName']." ".$result['firstName'].'</option>';
@@ -333,9 +369,14 @@ var isAdmin = false;
                 	?>
                 </select>
                 </div>
-                <div style="float:left">
-                	<input type="checkbox" id="camera" name="video" style="vertical-align:middle;"> Séance filmée
-                </div>
+                <?php
+                if ($_GET['field']=="1")
+                {
+                    echo '<div style="float:left">
+                    	<input type="checkbox" id="camera" name="video" style="vertical-align:middle;"> Séance filmée
+                    </div>';
+                }
+                ?>
                 <div style="clear:both;"></div>
                 <?php
                 if ($_SESSION['isAdmin']==true)
@@ -370,7 +411,7 @@ var isAdmin = false;
             </div> 
             <div>
             	
-			<div id="calendar"></div>
+			<div id="calendar" style="height:600px;"></div>
 		</div>
 	</div>
 </div>

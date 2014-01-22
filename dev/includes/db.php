@@ -52,6 +52,14 @@ class db{
 		return $resultats;
 	}
 
+	public function listEnabledPlayers(){
+		$resultats = $this->query('SELECT * 
+						FROM PlayerJeu
+						WHERE isEnabled="true"
+						ORDER BY lastName ASC','listPlayers');
+		return $resultats;
+	}
+
 	public function searchPlayers($search)
 	{
 		$resultats = $this->query('SELECT *

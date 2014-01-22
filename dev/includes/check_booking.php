@@ -38,12 +38,19 @@ else
 									FROM BookingJeu 
 									WHERE (Player1_ID='".$player1."' OR Player2_ID='".$player2."') 
 									AND DATEPART(wk,start)=DATEPART(wk,convert(datetime,'".$date."',120))
+									AND (BookingAggregation_ID = 0
+										OR BookingAggregation_ID = NULL)
 									ORDER BY start DESC","select");
 	//réservations déjÃ  existantes dans la semaine
 	if (mssql_num_rows($checkBooking)>0)
 	{
+		$timezone = new DateTimeZone('Europe/Paris');
 		$bookDate = mssql_result($checkBooking,0,'start');
+		$bookDate = date_create($bookDate,$timezone);
+		$bookDate = date_format($bookDate,"d M Y H:i:s");
+
 		$today = date("d M Y H:i:s");
+
 		//Réservation en attente
 		if ($bookDate>$today)
 		{
@@ -54,7 +61,8 @@ else
 		else
 		{
 			$error = 0;
-			$message = "Opération valide";
+			$message = "Opération valide
+						<script type='text/javascript'>closeCalendar();</script>";
 		}
 	}
 }
@@ -63,7 +71,7 @@ if ($error==0)
 {
 	$db->query('INSERT INTO BookingJeu (name,isSpecial,start,[end],creationDate,Court_ID,Player1_ID,Player2_ID,Filmed) 
 				VALUES ("Perso","False",convert(datetime,"'.$date.'",120),"",getutcdate(),'.$court.','.$player1.','.$player2.',"'.$camera.'")','insert');	
-	$message = $message."<br>Requête éxécutée";
+	$message = $message."<br>Réservation effectuée";
 
 	$query = $db->query('SELECT * FROM BookingJeu',"select");
 }
