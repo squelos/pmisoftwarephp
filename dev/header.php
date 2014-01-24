@@ -22,10 +22,16 @@ include_once('includes/functions.php');
     <script src="js/jquery/jquery.mousewheel.js"></script>
     <script src="js/prettify/prettify.js"></script>
     <script src="Datejs-all/build/date-fr-FR.js"></script>
+    <script type='text/javascript' src='fullcalendar-1.6.4/lib/jquery.min.js'></script>
+    <script type='text/javascript' src='fullcalendar-1.6.4/lib/jquery-ui.custom.min.js'></script>
 
     <!-- Metro UI CSS JavaScript plugins -->
     <script src="js/metro/metro-loader.js"></script>
     <script src="js/metro/metro-notify.js"></script>
+    <script src="js/metro/metro-calendar.js"></script>
+    <script src="js/metro/metro-datepicker.js"></script>
+    <script src="js/metro/metro-listview.js"></script>
+    <script src="tinymce/js/tinymce/tinymce.min.js"></script>
 
     <!-- Local JavaScript -->
     <script src="js/docs.js"></script>

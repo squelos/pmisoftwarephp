@@ -15,8 +15,8 @@ if (isset($_GET['uid']) && isset($_GET['key'])) {
 
 
 
-//(isset($_SESSION['isConnected']) === true ? '' : die('accès non autorisé'));
-/*(isset($_GET['p']) === true ? '' : die('accès direct interdit'));
+//(isset($_SESSION['isConnected']) === true ? '' : die('accÃ¨s non autorisÃ©'));
+/*(isset($_GET['p']) === true ? '' : die('accÃ¨s direct interdit'));
 $pageDemandee = cleanGetVar($_GET['p']);
 if($pageDemandee=='index'){
 	include('includes/profile_index.php');
@@ -25,6 +25,6 @@ elseif($pageDemandee=='newsletter'){
 	include('includes/admin_newsletter.php');
 }
 else{
-die('bien tenté');
+die('bien tentÃ©');
 }*/
 ?>

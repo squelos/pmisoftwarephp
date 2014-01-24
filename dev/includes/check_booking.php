@@ -9,17 +9,20 @@ include_once('functions.php');
 
 $error = 0;
 $message = "";
+$action = cleanGetVar($_GET["action"]);
 $player1 = cleanGetVar($_GET["p1"]);
 $player2 = cleanGetVar($_GET["p2"]);
-$date = cleanGetVar($_GET["d"]);
+$dateGet = cleanGetVar($_GET["d"]);
 $hour = cleanGetVar($_GET["h"]);
 $court = cleanGetVar($_GET["c"]);
 $camera = cleanGetVar($_GET['cam']);
 
-$date = substr($date, 6,10)."-".substr($date,3,2)."-".substr($date, 0,2)." ".$hour.":00";
+$date = substr($dateGet, 6,10)."-".substr($dateGet,3,2)."-".substr($dateGet, 0,2)." ".$hour.":00";
 
 $db = new db();
 
+if ($action=="classic")
+{
 //Vérification des droits Ã  réservation
 $checkRights = $db->query("SELECT * FROM PlayerJeu WHERE ID='".$player1."' AND isEnabled='true'","rights");
 if (mssql_num_rows($checkRights)>0)
@@ -35,12 +38,19 @@ else
 									FROM BookingJeu 
 									WHERE (Player1_ID='".$player1."' OR Player2_ID='".$player2."') 
 									AND DATEPART(wk,start)=DATEPART(wk,convert(datetime,'".$date."',120))
+									AND (BookingAggregation_ID = 0
+										OR BookingAggregation_ID = NULL)
 									ORDER BY start DESC","select");
 	//réservations déjÃ  existantes dans la semaine
 	if (mssql_num_rows($checkBooking)>0)
 	{
+		$timezone = new DateTimeZone('Europe/Paris');
 		$bookDate = mssql_result($checkBooking,0,'start');
+		$bookDate = date_create($bookDate,$timezone);
+		$bookDate = date_format($bookDate,"d M Y H:i:s");
+
 		$today = date("d M Y H:i:s");
+
 		//Réservation en attente
 		if ($bookDate>$today)
 		{
@@ -51,7 +61,8 @@ else
 		else
 		{
 			$error = 0;
-			$message = "Opération valide";
+			$message = "Opération valide
+						<script type='text/javascript'>closeCalendar();</script>";
 		}
 	}
 }
@@ -60,9 +71,41 @@ if ($error==0)
 {
 	$db->query('INSERT INTO BookingJeu (name,isSpecial,start,[end],creationDate,Court_ID,Player1_ID,Player2_ID,Filmed) 
 				VALUES ("Perso","False",convert(datetime,"'.$date.'",120),"",getutcdate(),'.$court.','.$player1.','.$player2.',"'.$camera.'")','insert');	
-	$message = $message."<br>Requête éxécutée";
+	$message = $message."<br>Réservation effectuée";
 
 	$query = $db->query('SELECT * FROM BookingJeu',"select");
 }
+}
 
-echo utf8_encode($error);
+if ($action=="recurrent")
+{
+	$dateRecurrent = cleanGetVar($_GET['dr']);
+	$bookName = cleanGetVar($_GET['bn']);
+
+	$db->query("INSERT INTO BookingAggregationJeu (name)
+				VALUES ('".$bookName."')","insertAggreg");
+
+	//RECUPERER LAST ID INSERTED/Problème possible de concurrence, à vérifier
+	$result = mssql_fetch_assoc($db->query("SELECT @@IDENTITY AS id","get last id"));
+	$aggregId = $result['id'];
+
+	$dateGet = substr($dateGet, -4).'/'.substr($dateGet, 3,2).'/'.substr($dateGet, 0,2);
+	$dateRecurrent = substr($dateRecurrent, -4).'/'.substr($dateRecurrent, 3,2).'/'.substr($dateRecurrent, 0,2);
+
+	$dateGet = new DateTime($dateGet);
+	$dateRecurrent = new DateTime($dateRecurrent);
+
+	while ($dateGet<$dateRecurrent)
+	{
+		$dateBook = $dateGet->format('Y-m-d')." ".$hour;
+		if ($dateGet<=$dateRecurrent)
+		{
+			//SET PLAYERS ID
+			$db->query("INSERT INTO BookingJeu (name,isSpecial,start,[end],creationDate,Court_ID,Player1_ID,Player2_ID,Filmed,BookingAggregation_ID)
+						VALUES ('".$bookName."','false',convert(datetime,'".$dateBook."',120),'',getutcdate(),".$court.",300,300,'".$camera."',".$aggregId.")",'insert');
+		}
+		$dateGet->add(new DateInterval('P7D'));
+	}
+	$message = "Ajout effectué.";
+}
+echo utf8_encode($message);
