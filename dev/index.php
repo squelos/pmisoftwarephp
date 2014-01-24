@@ -1,6 +1,7 @@
 <?php
 
 include_once('includes/functions.php');
+include_once('header.php');
 
 ?>
     <div class="page">
