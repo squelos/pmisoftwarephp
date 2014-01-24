@@ -20,6 +20,8 @@
                 <div class="example">
 					<p>Bonjour l'accueil ! </p>
 					<p><?php echo ( isset($_SESSION['isConnected']) === true ? 'connecté' : 'pas connecté'); ?></p>
+					<p>Dump des sessions : <b><?php print_r($_SESSION);?></b></p>
+					<p>mail : <?php //mailSend("frederic.hilpert@gmail.com", "test", "test <b>test</b>"); ?></p>
                 </div>
 
 

@@ -18,8 +18,20 @@ if($pageDemandee=='authAsk'){
 	$errorBit==1 ? $dump['mot']=$buffer : die('erreur');
 
 }
-elseif($pageDemandee=='getList'){
+elseif($pageDemandee=='video'){
+	$bdd = new db();
+	$filmedHours = $bdd->getFilmedHours();
+	while ($line = mssql_fetch_array($filmedHours)) {
+			$dump['filmedHours'][]=$line;
+	}
+}
+elseif($pageDemandee=='badgeversion'){
+	$bdd = new db();
+	echo $bdd->getBadgeVersion();
+}
+elseif($pageDemandee=='getAuthorizedTags'){
 	isset($_GET['key']) === true ? $key = cleanGetVar($_GET['key']) : die('key manquante');
+	$playerStatus = cleanGetVar($_GET['playerStatus']);
 	$fp = fopen('mot.txt', 'r');
 	$maKey=fgets($fp);
 	fclose($fp);
@@ -32,7 +44,7 @@ elseif($pageDemandee=='getList'){
 	$hash = hash('sha256', 'quickpass' . $maKey . 'quickpass');
 	if($key==$hash AND $errorbit==0){
 		$bdd = new db();
-		$listeBadges = $bdd->listeBadgeActive();
+		$listeBadges = $bdd->listeBadgeActive($playerStatus);
 		foreach ($listeBadges as $badge){
 			if($badge!='')
 			$dump['badges'][]=$badge;
@@ -53,6 +65,7 @@ else{
 die('bien tenté');
 }
 
+if($pageDemandee!='badgeversion')
 echo json_encode($dump);
 
 

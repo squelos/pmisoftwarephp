@@ -33,19 +33,36 @@ function connect($login, $mdp)
 {
 	global $returnvalues;
 	//temporaire juste pour tester
-	if($login=='test' AND $mdp=='test')
+	$bdd = new db();
+	$results = $bdd->getPwdHashAndSalt($login);
+	while ($row = mssql_fetch_array($results)) {
+		$salt = $row['salt'];
+		$hash = $row['passwordHash'];
+		$uid  = $row['ID'];
+	}
+	if(isset($salt))//Retiré && isset($hash)
 	{
-
-		$_SESSION['isConnected'] = true;
-		$_SESSION['id'] = 1;
-		//header('Location: ../index.php');
-		$returnvalues['etatconnexion'] = "succes";
+		$pwd = hash ( "sha256" , $mdp . $salt);//on sale
+		
+		if($pwd==$hash) //Si ce que l'utilisateur a tapé est = à ce qu'il y a en BDD une fois salé.
+		{
+			$_SESSION['isConnected'] = true;
+			$_SESSION['id'] = $uid;
+			$bdd3= new db();//On prends le statut de l'utilisateur
+			$statusandNameResults = $bdd3->getStatusandName($uid);
+			$_SESSION['status'] =  $statusandNameResults['statusName'];
+			$_SESSION['pnNom'] = $statusandNameResults['firstName'] . ' ' . $statusandNameResults['lastName'];
+			$returnvalues['etatconnexion'] = "succes";
+			$bdd = new db();
+			$bdd->updateLastLogin($uid);//On met à jour lastLogin
+		}
+		else{
+			$returnvalues['etatconnexion'] = "erreur";
+		}
 	}
 	else{
-		$returnvalues['etatconnexion'] = "erreur";
-		//header('Location: ../index.php?loginerror=true');
+		$returnvalues['etatconnexion'] = "erreur2";
 	}
-
 }
 
 

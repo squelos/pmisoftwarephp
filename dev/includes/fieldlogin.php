@@ -7,7 +7,7 @@ include_once('functions.php');
 				if(isset($_SESSION['isConnected'])){
 					?>
 					<legend>Profil</legend>
-					<p>Bonjour M.Test Test.</p>
+					<p>Bonjour <?=$_SESSION['pnNom']; ?></p>
 					<a href='includes/connexion.php?deconnect=true'><button class='warning'>Déconnexion</button></a>
 					<?php
 				}
@@ -31,6 +31,7 @@ include_once('functions.php');
 					<br>
 					<input align="center" id='connectsubmit' onClick="jsconnect()" type="submit" value="Valider" >
 					<img src='images/ajax-loader.gif' alt='chargement en cours'  id='ajaxload' style='display:none;'/>
+					<p><br/><a href="profile.php?p=pwdreset">Mot de passe oublié ?</a></p>
 				<!--</form>-->
 				<?php
 				}
