@@ -14,10 +14,12 @@ $player1 = cleanGetVar($_GET["p1"]);
 $player2 = cleanGetVar($_GET["p2"]);
 $dateGet = cleanGetVar($_GET["d"]);
 $hour = cleanGetVar($_GET["h"]);
+$endhour = cleanGetVar($_GET["endhour"]);
 $court = cleanGetVar($_GET["c"]);
 $camera = cleanGetVar($_GET['cam']);
 
 $date = substr($dateGet, 6,10)."-".substr($dateGet,3,2)."-".substr($dateGet, 0,2)." ".$hour.":00";
+$dateEnd = substr($dateGet, 6,10)."-".substr($dateGet,3,2)."-".substr($dateGet, 0,2)." ".$endhour;
 
 $db = new db();
 
@@ -70,7 +72,7 @@ else
 if ($error==0)
 {
 	$db->query('INSERT INTO BookingJeu (name,isSpecial,start,[end],creationDate,Court_ID,Player1_ID,Player2_ID,Filmed) 
-				VALUES ("Perso","False",convert(datetime,"'.$date.'",120),"",getutcdate(),'.$court.','.$player1.','.$player2.',"'.$camera.'")','insert');	
+				VALUES ("Perso","False",convert(datetime,"'.$date.'",120),convert(datetime,"'.$dateEnd.'",120),getutcdate(),'.$court.','.$player1.','.$player2.',"'.$camera.'")','insert');	
 	$message = $message."<br>Réservation effectuée";
 
 	$query = $db->query('SELECT * FROM BookingJeu',"select");
@@ -98,11 +100,12 @@ if ($action=="recurrent")
 	while ($dateGet<$dateRecurrent)
 	{
 		$dateBook = $dateGet->format('Y-m-d')." ".$hour;
+		$dateBookEnd = $dateGet->format('Y-m-d')." ".$endhour;
 		if ($dateGet<=$dateRecurrent)
 		{
 			//SET PLAYERS ID
 			$db->query("INSERT INTO BookingJeu (name,isSpecial,start,[end],creationDate,Court_ID,Player1_ID,Player2_ID,Filmed,BookingAggregation_ID)
-						VALUES ('".$bookName."','false',convert(datetime,'".$dateBook."',120),'',getutcdate(),".$court.",300,300,'".$camera."',".$aggregId.")",'insert');
+						VALUES ('".$bookName."','false',convert(datetime,'".$dateBook."',120),convert(datetime,'".$dateBookEnd."',120),getutcdate(),".$court.",300,300,'".$camera."',".$aggregId.")",'insert');
 		}
 		$dateGet->add(new DateInterval('P7D'));
 	}

@@ -55,6 +55,7 @@ var isAdmin = false;
             axisFormat : 'HH:mm',
             slotEventOverlap : false,
 
+
 			dayClick : function(date,allDay,jsEvent,view) {
                 var endDate = new Date(date);
                 endDate.setHours(endDate.getHours()+1);
@@ -71,19 +72,30 @@ var isAdmin = false;
                 }
                 else
                 {
-                    console.log(todaysEvents.length);
                     if (isAdmin==true)
                     {
                         $("#recurrent").show();
+                        $("#checkRecurrent").prop('checked',false);
+                        $("#recurrentDate").hide();
                     }
                     else{
                         $("#recurrent").hide();
                     }
                     $("#bookOk").html('');
                     $("#newEvent").show();
+                    $("#players").show();
                     $("#modifyEvent").hide();
     				$("#infoBook").css({top : jsEvent.pageY+15,left : jsEvent.pageX-30});
     				$("#infoBook").show();
+                    var hour = date.getHours();
+                    $("#recurrentEndHour option").remove();
+                    console.log(hour);
+                    for (var i = hour; i <= 23 ; i++) {
+                        $("#recurrentEndHour").append("<option value='"+i+"'>"+i+"</option>");
+                    };
+
+                    var minute = date.getMinutes();
+                    $("#recurrentEndMinute").val(minute);
     			
     				var day = date.getDate();
     				day=day.toString();
@@ -93,10 +105,10 @@ var isAdmin = false;
     				if (month.length<2) month = "0"+month;
     				var year = date.getFullYear();
     				var displayDate = day+"/"+month+"/"+year;
-    				var hour = date.getHours();
+    				
     				hour = hour.toString();
     				if (hour.length<2) hour="0"+hour;
-    				var minute = date.getMinutes();
+    				
     				minute = minute.toString();
     				if (minute.length<2) minute = "0"+minute;
     				var displayHour = hour+":"+minute;
@@ -261,6 +273,7 @@ var isAdmin = false;
     	var player2 = $("#player2").val();
     	var date = $("#date").val();
     	var hour = $("#hour").val();
+        var endHour = $("#recurrentEndHour").val()+":"+$("#recurrentEndMinute").val();
     	var court = $("#field").val();
         var camera = $("#camera").prop("checked");
         var recurrent = $("#checkRecurrent").prop("checked");
@@ -269,12 +282,12 @@ var isAdmin = false;
         {
             var dateRecurrent = $("#recurrentPicker").val();
             var bookName = $("#bookName").val();
-            maj("includes/check_booking.php?action=recurrent&dr="+dateRecurrent+"&bn="+bookName+"&p1="+player1+"&p2="+player2+"&d="+date+"&h="+hour+"&c="+court+"&cam="+camera,"notifDiv","checkBook();notifyUser();fetchEvents();");
+            maj("includes/check_booking.php?action=recurrent&endhour="+endHour+"&dr="+dateRecurrent+"&bn="+bookName+"&p1="+player1+"&p2="+player2+"&d="+date+"&h="+hour+"&c="+court+"&cam="+camera,"notifDiv","checkBook();notifyUser();fetchEvents();");
      
         }
         else
         {
-    	   maj("includes/check_booking.php?action=classic&p1="+player1+"&p2="+player2+"&d="+date+"&h="+hour+"&c="+court+"&cam="+camera,"notifDiv","checkBook();notifyUser();fetchEvents();");
+    	   maj("includes/check_booking.php?action=classic&endhour="+endHour+"&p1="+player1+"&p2="+player2+"&d="+date+"&h="+hour+"&c="+court+"&cam="+camera,"notifDiv","checkBook();notifyUser();fetchEvents();");
         }
     }
 
@@ -326,9 +339,15 @@ var isAdmin = false;
         if (val==true)
         {
             $("#recurrentDate").show();
+            $("#recurrentEndHour").prop('disabled',false);
+            $("#recurrentEndMinute").prop('disabled',false);
+            $("#players").hide();
         }
         else
         {
+            $("#players").show();
+            $("#recurrentEndHour").prop('disabled',true);
+            $("#recurrentEndMinute").prop('disabled',true);
             $("#recurrentDate").hide();
         }
     }
@@ -347,14 +366,22 @@ var isAdmin = false;
             	<input type="text" id="field" value="<?php echo $_GET['field']; ?>" style="display:none;"/>
                 <a href="#" onclick="closeCalendar();"><i class="icon-cancel" style="float:right"></i></a>
                 <br>
-                <input type="text" placeholder="Date" name='date' id='date' disabled />
+                <input type="text" placeholder="Date" size=10 ame='date' id='date' disabled />
+                <input type="text" placeholder="Heure" size=5 name='time' id='hour' disabled />
                 <br>
-                <input type="text" placeholder="Heure" name='time' id='hour' disabled />
-                <br>
-                <br>
-                <div style="float:left;">
-                <label>Joueur 1</label><br>
+                Heure de fin : 
+                           <select id="recurrentEndHour" disabled>
 
+                           </select>
+                           H
+                           <select id="recurrentEndMinute" disabled>
+                                <option value="00">00</option>
+                                <option value="30">30</option>
+                            </select>
+                <br>
+                <br>
+                <div style="float:left;" id="players">
+                <label>Joueur 1</label>
                 <input type="text" placeholder="player1" name="player1" id="player1" value="<?php echo $_SESSION['id']; ?>" disabled/>
                 <label>Joueur 2</label>
                 <select id="player2">
@@ -362,6 +389,7 @@ var isAdmin = false;
                 	$db = new db();
 
                 		$players = $db->listEnabledPlayers();
+  
                 		while($result=mssql_fetch_array($players))
                 		{
                 			echo '<option value="'.$result['ID'].'">'.$result['lastName']." ".$result['firstName'].'</option>';
@@ -385,7 +413,10 @@ var isAdmin = false;
                             <input type="checkbox" id="checkRecurrent" style="vertical-align:middle;" onChange="showRecurrent(this);">Réservation récurrente
                            <div id="recurrentDate"  style="display:none;">
                            Nom réservation :
-                           <input type="text" id="bookName" /><br>
+                           <input type="text" id="bookName" />
+                           <br>
+                           
+                           <br>
                                 Jusqu\'à : 
                             <br>
                             <div class="input-control text" id="timePicker" >
@@ -419,6 +450,13 @@ var isAdmin = false;
 var d = new Date();
 
     $("#timePicker").datepicker({
+        date:d,
+        format:"dd/mm/yyyy",
+        locale:'fr',
+        start:1
+    });
+
+    $("#timePickerSlide").datepicker({
         date:d,
         format:"dd/mm/yyyy",
         locale:'fr',
