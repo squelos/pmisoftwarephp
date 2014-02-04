@@ -1,11 +1,12 @@
 <?php
+include_once 'dbconf.php';
 class db{
 	private $link='';
 	
 	function db(){
-		$servername 	= '10.154.122.156';
-		$username 		= 'tcpAdmin';
-		$password  		= 'TCPJambon54';
+		$servername 	= SERVERNAME;
+		$username 		= USERNAME;
+		$password  		= CONSTANT;
 		
 		$link=mssql_connect (  $servername ,  $username, $password );
 		if (!$link || !mssql_select_db('TCP_DB', $link)) {
