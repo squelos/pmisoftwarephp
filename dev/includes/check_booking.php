@@ -1,4 +1,5 @@
 <?php
+@session_start();
 /* CODES ERREURS 
 0 : Aucune erreur
 1 : Authorisation refusée
@@ -26,11 +27,12 @@ $db = new db();
 if ($action=="classic")
 {
 //Vérification des droits Ã  réservation
-$checkRights = $db->query("SELECT * FROM PlayerJeu WHERE ID='".$player1."' AND isEnabled='true'","rights");
-if (mssql_num_rows($checkRights)>0)
+$checkRights = $db->query("SELECT * FROM PlayerJeu WHERE ID=".$player1." AND isEnabled='true'","rights");
+if ((mssql_num_rows($checkRights)>0)&&($_SESSION['status']!="Administrateur"))
 {
 	$error = 1;
 	$message = "Vous n'avez pas l'autorisation de réserver.";
+	echo utf8_encode($message);
 }
 else
 {
@@ -67,6 +69,7 @@ else
 						<script type='text/javascript'>closeCalendar();</script>";
 		}
 	}
+	echo utf8_encode($message);
 }
 
 if ($error==0)
@@ -110,5 +113,5 @@ if ($action=="recurrent")
 		$dateGet->add(new DateInterval('P7D'));
 	}
 	$message = "Ajout effectué.";
+	echo utf8_encode($message);
 }
-echo utf8_encode($message);

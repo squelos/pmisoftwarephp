@@ -24,10 +24,12 @@ if ($action=="start")
 		$query = $db->query("SELECT ID FROM BookingJeu WHERE BookingAggregation_ID=".$idBook[4],'get aggreg list');
 
 		$start = new DateTime($start);
+		$end = new DateTime($end);
 
 		while ($result = mssql_fetch_array($query)) {
-			$db->query("UPDATE BookingJeu SET start=convert(datetime,'".$start->format('Y-m-d H:i:s') ."',120) WHERE ID=".$result['ID'],'update start aggreg');
+			$db->query("UPDATE BookingJeu SET start=convert(datetime,'".$start->format('Y-m-d H:i:s') ."',120),[end]=convert(datetime,'".$end->format('Y-m-d H:i:s') ."',120) WHERE ID=".$result['ID'],'update start aggreg');
 			$start->add(new DateInterval('P7D'));
+			$end->add(new DateInterval('P7D'));
 		}
 	}
 
@@ -70,4 +72,25 @@ if ($action=="update")
 	$db->query("UPDATE BookingJeu SET start='".$date."',Player1_ID='".$player1."', Player2_ID='".$player2."',Filmed='".$camera."' WHERE ID=".$idBook[0],'update event');
 
 	echo utf8_encode('Mise à jour effectuée.');
+}
+
+
+
+if ($action=="listeplayer2")
+{
+	$search = cleanGetVar($_GET['search']);
+
+	$players = $db->query("SELECT * 
+						FROM PlayerJeu 
+						WHERE (lastName+' '+firstName LIKE '%".$search."%'
+												OR firstName+' '+lastName LIKE '%".$search."%')
+						AND isEnabled='true'
+						ORDER BY lastName","list players");
+
+	while($result=mssql_fetch_array($players))
+    {
+    	echo '<option value="'.$result['ID'].'">'.$result['lastName']." ".$result['firstName'].'</option>';
+    }
+
+
 }

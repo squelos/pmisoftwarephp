@@ -11,8 +11,8 @@ if ($action=="listplayer")
 	$db = new db();
 	$query = $db->query("SELECT * 
 						FROM PlayerJeu 
-						WHERE (lastName LIKE '%".$search."%'
-						OR firstName LIKE '%".$search."%')
+						WHERE (lastName+' '+firstName LIKE '%".$search."%'
+												OR firstName+' '+lastName LIKE '%".$search."%')
 						AND Subscribed=1
 						ORDER BY lastName","list players");
 

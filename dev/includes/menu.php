@@ -1,8 +1,5 @@
 <nav class="sidebar" style="width:275px;position:absolute; padding-top:100px; padding-left: 10px;">
 <ul>
-
-<br>
-<br>
 <li ><a href="index.php"><i class="icon-home"></i>Accueil</a></li>
 <li ><a href="booking.php?p=fields"><i class="icon-calendar"></i>Réservation</a></li>
 <!--<li ><a href="news.php"><i class="icon-newspaper"></i>Actualités</a></li>-->
@@ -14,7 +11,7 @@
 	<a class="dropdown-toggle" href="#"><i class="icon-key"></i>Administration</a>
 		<ul class="dropdown-menu">
 		<li ><a href="newsletter.php">Newsletter</a></li>
-		<li ><a href="admin_news.php">Actualités</a></li>
+		<!--<li ><a href="admin_news.php">Actualités</a></li>-->
 		</ul>
 </li>
 <?php } ?>

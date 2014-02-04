@@ -56,6 +56,7 @@
                     e.preventDefault();
                     e.stopPropagation();
                     $.Dialog.close();
+                    fetchEvents();
                 }).appendTo(_caption);
             }
             if (params.sysButtons.btnMax) {
@@ -95,7 +96,7 @@
             .css("left", ($(window).width() - _window.outerWidth()) / 2);
 
 
-        console.log( $(window).height());
+       
 
         addTouchEvents(_window[0]);
 

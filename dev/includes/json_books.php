@@ -21,9 +21,11 @@ while($result=mssql_fetch_array($query))
 {	
 	$start = date("Y-m-d H:i:s",strtotime($result['start']));
 
-	$end = date_create($start);
+	$end = date("Y-m-d H:i:s",strtotime($result['end']));
+
+	/*$end = date_create($start);
 	date_add($end,date_interval_create_from_date_string('1 hours'));
-	$end = date_format($end,'Y-m-d H:i:s');
+	$end = date_format($end,'Y-m-d H:i:s');*/
 
 
 	if(($_SESSION['id']==$result['Player2_ID'])||($_SESSION['id']==$result['Player1_ID'])||($_SESSION['isAdmin']==true))

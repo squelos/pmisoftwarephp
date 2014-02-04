@@ -89,7 +89,7 @@ class db{
 	public function getPwdHashAndSalt($login){
 		$resultats = $this->query('SELECT salt, passwordHash, ID
 								   FROM PlayerJeu
-								   WHERE login like "' . $login .'"', 'getPwdHashAndSalt');
+								   WHERE email like "' . $login .'"', 'getPwdHashAndSalt');
 		return $resultats;
 	}
 	
