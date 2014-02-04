@@ -360,6 +360,13 @@ var isAdmin = false;
         {
             var dateRecurrent = $("#recurrentPicker").val();
             var bookName = $("#bookName").val();
+            var bookNameSelect = $("#bookNameSelect").val();
+            //console.log(bookName+"--------"+bookNameSelect);
+            if (bookNameSelect!=" ")
+            {
+                bookName = bookNameSelect;
+            }
+            
             maj("includes/check_booking.php?action=recurrent&endhour="+endHour+"&dr="+dateRecurrent+"&bn="+bookName+"&p1="+player1+"&p2="+player2+"&d="+date+"&h="+hour+"&c="+court+"&cam="+camera,"notifDiv","checkBook();notifyUser();fetchEvents();");
      
         }
@@ -524,7 +531,22 @@ var isAdmin = false;
                             </div>
                            <div id="recurrentDate"  style="display:none;">
                            Nom réservation :
-                           <input type="text" id="bookName" />
+                           <input type="text" id="bookName" size=23/><br>
+                           <select id="bookNameSelect" style="margin-left:129px;">
+                                <option value=" "></option>
+                                <option value="Éclairage">Éclairage</option>
+                                <option value="Entraînement équipe 1">Entraînement équipe 1</option>
+                                <option value="Entraînement adultes">Entraînement adultes</option>
+                                <option value="Sport adapté">Sport adapté</option>
+                                <option value="Match amical">Match amical</option>
+                                <option value="Stage">Stage</option>
+                                <option value="École de tennis">École de tennis</option>
+                                <option value="Match CD 54">Match CD 54</option>
+                                <option value="Tournoi interne">Tournoi interne</option>
+                                <option value="Entretien court">Entretien court</option>
+                                <option value="Tournoi open">Tournoi open</option>
+                                <option value="Écoles primaires">Écoles primaires</option>
+                           </select>
                            <br>
                            
                            <br>
