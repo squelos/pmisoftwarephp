@@ -4,13 +4,6 @@ include_once('includes/functions.php');
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="product" content="Metro UI CSS Framework">
-    <meta name="description" content="Simple responsive css framework">
-    <meta name="author" content="Sergey S. Pimenov, Ukraine, Kiev">
-
-
-
     <link href="css/metro-bootstrap.css" rel="stylesheet">
     <link href="css/metro-bootstrap-responsive.css" rel="stylesheet">
     <link href="css/docs.css" rel="stylesheet">
@@ -28,6 +21,7 @@ include_once('includes/functions.php');
     <!-- Metro UI CSS JavaScript plugins -->
     <script src="js/metro/metro-loader.js"></script>
     <script src="js/metro/metro-notify.js"></script>
+
     <script src="js/metro/metro-calendar.js"></script>
     <script src="js/metro/metro-datepicker.js"></script>
     <script src="js/metro/metro-listview.js"></script>
@@ -37,9 +31,7 @@ include_once('includes/functions.php');
     <script src="js/docs.js"></script>
     <script src="js/github.info.js"></script>
     <script src="js/core.js"></script>
-	
-
-	
+		
     <title>Tennis Club Portois</title>
 </head>
 <body class="metro">

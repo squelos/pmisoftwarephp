@@ -33,9 +33,9 @@ var cal;
                 
                 <div class="example" id="content">
                     <map name="map" id="fieldMap">
-                        <area shape="poly" id="field1" coords="565,32,460,75,672,183,738,122,565,32" href="/max/dev/booking.php?p=calendar&field=1" />
-                        <area shape="poly" id="field2" coords="494,115,650,196,587,245,426,158,494,115" href="/max/dev/booking.php?p=calendar&field=2"/>
-                        <area shape="poly" id="field3" coords="303,217,367,253,227,356,143,315,303,217" href="/max/dev/booking.php?p=calendar&field=3"/>
+                        <area shape="poly" id="field1" coords="565,32,460,75,672,183,738,122,565,32" href="./booking.php?p=calendar&field=1" />
+                        <area shape="poly" id="field2" coords="494,115,650,196,587,245,426,158,494,115" href="./booking.php?p=calendar&field=2"/>
+                        <area shape="poly" id="field3" coords="303,217,367,253,227,356,143,315,303,217" href="./booking.php?p=calendar&field=3"/>
                     </map>
 					<img src="images/terrains.jpg" usemap="#map" />
                 </div>
