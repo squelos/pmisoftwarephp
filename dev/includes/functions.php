@@ -23,7 +23,7 @@ include('db.php');
  }
  
  function mailSend($to, $subject, $content){
- 	include 'mail/class.phpmailer.php';
+ 	include_once 'mail/class.phpmailer.php';
  	$mail = new PHPMailer(true); // the true param means it will throw exceptions on errors, which we need to catch
  	
  	$mail->IsSMTP(); // telling the class to use SMTP

@@ -6,7 +6,11 @@ include_once 'db.php';
             <div class="page-region-content">
                 <h1>
                     <a href="<?= $_SERVER['HTTP_REFERER']; ?>"><i class="icon-arrow-left-3 fg-darker smaller"></i></a>
+                    <?php if(isset($_GET['q'])) { //On check si c'est un mot de passe oublié ou non ?>
+                    Réinitialisation du mot de passe<small class="on-right"></small>
+                    <?php } else {?>
                     Mot de passe oublié<small class="on-right">Récupération du mot de passe</small>
+                    <?php } ?>
                 </h1>
 				
                 <div class="example">

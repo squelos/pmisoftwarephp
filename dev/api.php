@@ -16,7 +16,6 @@ if($pageDemandee=='authAsk'){
 	fwrite($fp, $buffer)=== FALSE ? '' :  $errorBit=1;
 	fclose($fp);
 	$errorBit==1 ? $dump['mot']=$buffer : die('erreur');
-
 }
 elseif($pageDemandee=='video'){
 	$bdd = new db();
@@ -31,7 +30,7 @@ elseif($pageDemandee=='badgeversion'){
 }
 elseif($pageDemandee=='getAuthorizedTags'){
 	isset($_GET['key']) === true ? $key = cleanGetVar($_GET['key']) : die('key manquante');
-	$playerStatus = cleanGetVar($_GET['playerStatus']);
+	//$playerStatus = cleanGetVar($_GET['playerStatus']);
 	$fp = fopen('mot.txt', 'r');
 	$maKey=fgets($fp);
 	fclose($fp);
@@ -44,13 +43,48 @@ elseif($pageDemandee=='getAuthorizedTags'){
 	$hash = hash('sha256', 'quickpass' . $maKey . 'quickpass');
 	if($key==$hash AND $errorbit==0){
 		$bdd = new db();
-		$listeBadges = $bdd->listeBadgeActive($playerStatus);
+		$listeBadges = $bdd->listeBadgeActive(1);
 		foreach ($listeBadges as $badge){
 			if($badge!='')
-			$dump['badges'][]=$badge;
+				$dump['1'][]=(int)$badge;
+		}
+		$bdd = new db();
+		$listeBadges = $bdd->listeBadgeActive(2);
+		foreach ($listeBadges as $badge){
+			if($badge!='')
+				$dump['2'][]=(int)$badge;
+		}
+		$bdd = new db();
+		$listeBadges = $bdd->listeBadgeActive(3);
+		foreach ($listeBadges as $badge){
+			if($badge!='')
+				$dump['3'][]=(int)$badge;
 		}
 		/*$dump['badges'][]='0004147071';
 		$dump['badges'][]='0004086341';
+		$dump['badges'][]='0004127606';*/
+	}
+	else{
+		die('erreur');
+	}
+}
+elseif($pageDemandee=='logs'){
+	isset($_GET['key']) === true ? $key = cleanGetVar($_GET['key']) : die('key manquante');
+	$fp = fopen('mot.txt', 'r');
+	$maKey=fgets($fp);
+	fclose($fp);
+	$errorBit=0;
+	$fp = fopen('mot.txt', 'w');
+	fwrite($fp, '')=== FALSE ?  $errorBit=1 : '';
+	fclose($fp) ? $errorbit=0 : '';
+	//print_r($maKey);
+	//print_r($key);
+	$hash = hash('sha256', 'quickpass' . $maKey . 'quickpass');
+	if($key==$hash AND $errorbit==0){
+		$bdd = new db();
+		$bdd->pushLogs($_POST['logs']);
+		/*$dump['badges'][]='0004147071';
+			$dump['badges'][]='0004086341';
 		$dump['badges'][]='0004127606';*/
 	}
 	else{
@@ -65,7 +99,7 @@ else{
 die('bien tenté');
 }
 
-if($pageDemandee!='badgeversion')
+if($pageDemandee!='badgeversion' && $pageDemandee!='logs')
 echo json_encode($dump);
 
 

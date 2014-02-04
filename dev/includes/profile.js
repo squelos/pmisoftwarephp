@@ -99,3 +99,20 @@ function getUrlVars() {
     });
     return vars;
 }
+
+
+
+
+//fonctions pour l'index du profil
+function chgPwd(){
+	$('#chgMail').hide();
+	$('#chgPwd').show();
+	$.get( "includes/profile_pwdreset_fromprofile.php", function( data ) {
+		  $( "#chgPwd" ).html( data );
+		 //alert( "Load was performed." );
+		});
+}
+function chgMail(){
+	$('#chgPwd').hide();
+	$('#chgMail').show();
+}

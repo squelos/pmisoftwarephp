@@ -89,7 +89,7 @@ class db{
 	public function getPwdHashAndSalt($login){
 		$resultats = $this->query('SELECT salt, passwordHash, ID
 								   FROM PlayerJeu
-								   WHERE login like "' . $login .'"', 'getPwdHashAndSalt');
+								   WHERE email like "' . $login .'"', 'getPwdHashAndSalt');
 		return $resultats;
 	}
 	
@@ -315,4 +315,108 @@ class db{
 						WHERE ID = ' . $id, 'updateLastLogin');
 		$this->close();
 	}
+	/**
+	 * Fonction getUserInfos.
+	 *
+	 * @author     	Fred
+	 * @version    	1.0
+	 * @date  	  	20/01/2013
+	 * @Description Récupère les informations de l'utilisateur pour affichage dans le profil.
+	 * @return		les infos utilisateur.
+	 *
+	 */
+	function getUserInfos($id){
+		$result = $this->query('  SELECT CONVERT(VARCHAR, birthDate, 101) AS formatedBirthDate, firstName, lastName, ranking, licenceNumber
+						FROM [PlayerJeu]
+						WHERE ID = ' . $id, 'getUserInfos');
+		return mssql_fetch_array($result);
+		$this->close();
+	}
+	/**
+	 * Fonction updatePasswordResetDate.
+	 *
+	 * @author     	Fred
+	 * @version    	1.0
+	 * @date  	  	31/01/2013
+	 * @Description Met à jour la date de demande de reset de mdp ou d'adresse mail.
+	 * @return		nothiiiiing
+	 *
+	 */
+	function updatePasswordResetDate($id){
+		$result = $this->query('	UPDATE [PlayerJeu]
+									SET passwordResetDemand = getdate()
+									WHERE ID = ' . $id, 'updatePasswordResetDate');
+		$this->close();
+	}
+	
+	
+	/**
+	 * Fonction pushLogs.
+	 *
+	 * @author     	Fred
+	 * @version    	1.0
+	 * @date  	  	28/01/2013
+	 * @Description Envoie les logs depuis l'api à la BDD
+	 * @return		nothiiiiing
+	 *
+	 */
+	function pushLogs($logs){
+		
+			$lines = split(';', $logs);
+			foreach ($lines as $line){
+				if($line!=''){
+					$stmt = mssql_init('addLogEntry');
+					$logItems = split(',', $line);
+					
+					$logItemDeux = (int) $logItems[2];
+					mssql_bind($stmt, '@entryDate',  $logItems[0],        SQLVARCHAR);
+					mssql_bind($stmt, '@readerName',      $logItems[1],        SQLVARCHAR);
+					mssql_bind($stmt, '@tagNumber',      $logItemDeux  ,            SQLINT4);
+					mssql_bind($stmt, '@readerResponse',       $logItems[3],             SQLINT1);
+					mssql_execute($stmt);
+					mssql_free_statement($stmt);
+					//print_r($logItemDeux);  echo "|";
+				}
+
+			}
+			echo "ok";
+
+	}
+	/**
+	 * Fonction setMail getMail
+	 *
+	 * @author     	Fred
+	 * @version    	1.0
+	 * @date  	  	29/01/2013
+	 * @Description Sette et gette les valeurs des champs oldMailValidated et newMailValidated.
+	 * @return		nothiiiiing
+	 *
+	 */
+	function setMailResetStateTo($id, $oldMailValidated, $newMailValidated){
+		$this->query('  UPDATE [PlayerJeu]
+						SET oldMailValidated = '.$oldMailValidated.', newMailValidated = '.$newMailValidated.'
+						WHERE ID = ' . $id, 'setMailResetStateTo');
+		$this->close();
+	}
+	function getMailResetState($id){
+		$result = $this->query('  SELECT oldMailValidated, newMailValidated 
+						FROM [PlayerJeu]
+						WHERE ID = ' . $id, 'getMailResetStateTo');
+		return mssql_fetch_array($result);
+	}
+	function setNewMailAddress($id, $newMailAddress){
+		$this->query('  UPDATE [PlayerJeu]
+						SET newEmail = "' . $newMailAddress . '"
+						WHERE ID = ' . $id, 'setNewMailAddress');
+		$this->close();
+	}
+	function setNewMail($id){
+		$this->query('  UPDATE [PlayerJeu]
+						SET oldMailValidated = null , newMailValidated = null, 
+						email = (SELECT newEmail FROM  [PlayerJeu] WHERE ID = ' . $id . ') 
+						WHERE ID = ' . $id, 'getMailResetStateTo');
+		$this->close();
+	}
+	
+	
 }
