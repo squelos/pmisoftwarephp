@@ -133,7 +133,7 @@ var nbTo = 0;
 	<div class="page-region">
 	    <div class="page-region-content">
 	   		<h1>
-                <a href="/"><i class="icon-arrow-left-3 fg-darker smaller"></i></a>
+                <a href="<?= $_SERVER['HTTP_REFERER']; ?>"><i class="icon-arrow-left-3 fg-darker smaller"></i></a>
                 Newsletter
             </h1>
 

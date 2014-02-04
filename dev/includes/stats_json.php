@@ -6,6 +6,7 @@ include_once('functions.php');
 	//Niveau de ball
 	$query = $db->query("SELECT COUNT(ID) AS NB, BallLevel_ID
 						FROM PlayerJeu
+						WHERE isEnabled='true'
 						GROUP BY BallLevel_ID","Stats ball level");
 
 	$balllevel = 'var data = google.visualization.arrayToDataTable([
@@ -38,6 +39,7 @@ include_once('functions.php');
 	//SEXE
 	$query = $db->query("SELECT COUNT(ID) AS NB, sex
 						FROM PlayerJeu
+						WHERE isEnabled='true'
 						GROUP BY sex ","Stats category");
 	$sexe = 'var data=google.visualization.arrayToDataTable([
 				["Sexe","Nombre"],';
@@ -64,6 +66,7 @@ include_once('functions.php');
 	$query = $db->query("SELECT COUNT(ID) AS NB
 						FROM PlayerJeu
 						WHERE zipCode=54210
+						AND isEnabled='true'
 						AND UPPER(city) LIKE '%NICOLAS%'","origin players");
 	$originStNic = mssql_result($query, 0, 'NB');
 
@@ -94,21 +97,28 @@ include_once('functions.php');
 
 		$fieldByCateg .= "['".$resultCateg['categoryName']."',";
 
-		while ($result = mssql_fetch_array($query))
+		//$nb  = mssql_result($query, 0, 'NB');
+		$nb=0;
+		if (mssql_result($query, 0, 'NB')) $nb=mssql_result($query, 0, 'NB');
+		$fieldByCateg .= $nb.",";
+
+		//$nb  = mssql_result($query, 1, 'NB');
+		$nb=0;
+		if (mssql_result($query, 1, 'NB')) $nb=mssql_result($query, 1, 'NB');
+		$fieldByCateg .= $nb.",";
+
+		//$nb  = mssql_result($query, 2, 'NB');
+		$nb=0;
+		if (@mssql_result($query, 2, 'NB')) $nb=@mssql_result($query, 2, 'NB');
+		$fieldByCateg .= $nb.",";
+
+		/*while ($result = mssql_fetch_array($query))
 		{
 			$fieldByCateg .= $result['NB'].",";
-		}
+		}*/
 
 		$fieldByCateg .= "''],";
-		/*$queryField = $db->query("SELECT COUNT(ID) AS NB
-						        FROM BookingJeu 
-						        WHERE Player1_ID IN (SELECT Player_ID 
-						            FROM PlayerCategory 
-						            WHERE Category_Id=".$resultCateg['Id'].")
-						        OR Player2_ID IN (SELECT Player_ID 
-						            FROM PlayerCategory 
-						            WHERE Category_Id=".$resultCateg['Id'].")
-						        GROUP BY Court_ID","list nb categ by field");*/
+		
 	}
 
 	$fieldByCateg .= "]);";

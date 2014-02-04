@@ -43,7 +43,7 @@ include_once('includes/functions.php');
     <title>Tennis Club Portois</title>
 </head>
 <body class="metro">
-    <header class="bg-dark" data-load="footer.html"></header>
+    <header class="bg-dark"></header>
 	<?php include("includes/menu.php");?> 
 	<div id="login">
 		<fieldset id='fieldsetlogin'>

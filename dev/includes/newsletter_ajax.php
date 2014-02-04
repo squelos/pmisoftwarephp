@@ -11,8 +11,8 @@ if ($action=="listplayer")
 	$db = new db();
 	$query = $db->query("SELECT * 
 						FROM PlayerJeu 
-						WHERE (lastName LIKE '%".$search."%'
-						OR firstName LIKE '%".$search."%')
+						WHERE (lastName+' '+firstName LIKE '%".$search."%'
+												OR firstName+' '+lastName LIKE '%".$search."%')
 						AND Subscribed=1
 						ORDER BY lastName","list players");
 
@@ -39,7 +39,7 @@ if ($action=="listcateg")
 		$queryNbCateg = $db->query("SELECT COUNT(Player_ID) AS nbCateg 
 									FROM PlayerCategory 
 									WHERE Category_Id=".$result['Id']."
-									AND Player_ID NOT IN (SELECT ID FROM PlayerJeu WHERE Subscribed=0)","nbCateg");
+									AND Player_ID NOT IN (SELECT ID FROM PlayerJeu WHERE Subscribed=0 OR Subscribed=NULL)","nbCateg");
 		$nbCateg = mssql_result($queryNbCateg, 0, "nbCateg");
 		$return = $return.'<a href="#" style="width:95%;"class="list" id="categ-'.$result['Id'].'-'.$nbCateg.'" onclick="addTo(this);">
             			<div class="list-content" >'.$result['categoryName'].'</div>
@@ -71,10 +71,12 @@ if ($action=="sendmail")
 	$message = $_GET['m'];
 	$to = $_GET['to'];
 
+	$subject = "Newsletter TCP - ".$date('d/m/Y');
 	$db = new db();
 	$query = $db->query("SELECT email FROM PlayerJeu WHERE ID=".$to,"get mail address");
 	$mail = mssql_result($query, 0, 'email');
 
 	$message = $message."<br><br><br><p><font size='2'>Afin de vous désabonner de cette newsletter merci de suivre ce <a href='#'>lien</a></font>";
-	echo $message;
+	
+	sendMail($to,$subject,$message);
 }
