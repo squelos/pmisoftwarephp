@@ -42,7 +42,7 @@ include_once 'db.php';
                     		Veuillez cliquer sur le lien si dessous pour continuer la procédure. 
                     		Si vous ne souhaitez pas changer votre mot de passe, ne faites rien. Le lien ci-dessous est valide pendant 24h.<br/>
                     		
-                    		<a href='http://172.17.100.1/fred/dev/profile.php?p=pwdreset&uid=". $dbResult['ID'] . "&key=" . $newPwdReset . "'>http://172.17.100.1/fred/dev/profile.php?uid=". $dbResult['ID'] . "&key=" . $newPwdReset . "</a>
+                    		<a href='http://172.17.100.1/fred/dev/profile.php?p=pwdreset&uid=". $dbResult['ID'] . "&key=" . $newPwdReset . "'>http://dev.tennis-club-portois.fr/profile.php?uid=". $dbResult['ID'] . "&key=" . $newPwdReset . "</a>
                     		";
 						mailSend($mail, "Demande de changement de mdp", $mailContent);
 						echo " <p class='icon-warning fg-green on-left'> Le courriel avec les instructions pour la réinitialisation de votre mot de passe vient d'être envoyé.</p>";

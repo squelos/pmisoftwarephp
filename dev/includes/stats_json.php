@@ -21,12 +21,12 @@ include_once('functions.php');
 
 	$balllevel.=']);';
 
-	//CatÃ©gories
+	//Catégories
 	$query = $db->query("SELECT COUNT(Player_ID) AS NB, Category_ID
 						FROM PlayerCategory
 						GROUP BY Category_ID ","Stats category");
 	$category = 'var data=google.visualization.arrayToDataTable([
-				["CatÃ©gorie","Nombre"],';
+				["Catégorie","Nombre"],';
 	while ($result=mssql_fetch_array($query))
 	{
 		$categoryName = $db->query("SELECT categoryName FROM CategorySet WHERE Id=".$result['Category_ID'],"Category name");

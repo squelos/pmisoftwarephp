@@ -1,7 +1,7 @@
 <?php
 @session_start();
 
-//Activation Ã©lÃ©ment menu
+//Activation élément menu
 $newsletter = "class=active";
 
 if (isset($_SESSION['isConnected']))
@@ -78,7 +78,7 @@ var nbTo = 0;
 	                              width:400,
 	                              height:200,
 	                              title: 'Envoi en cours', 
-	                              content : '<div style="width:50%;height:20%;margin:auto;text-align:center;">Envoi des mails en cours.<br><div><div id="compteur" style="float:left;">0</div><div style="float:left;"> sur '+nbTo+' envoyÃ©s.</div></div></div>'
+	                              content : '<div style="width:50%;height:20%;margin:auto;text-align:center;">Envoi des mails en cours.<br><div><div id="compteur" style="float:left;">0</div><div style="float:left;"> sur '+nbTo+' envoyés.</div></div></div>'
 	                          });
 
 			$("#listto").children().each(function() {
@@ -102,7 +102,7 @@ var nbTo = 0;
 		else
 		{
 			$.Notify({
-	            content : 'Veuillez sÃ©lectionner des destinataires',
+	            content : 'Veuillez sélectionner des destinataires',
 	            position : 'bottom-right'
 	        })
 		}
@@ -116,7 +116,7 @@ var nbTo = 0;
 		{
 			$.Dialog.close();
 			$.Notify({
-	            content : 'Mails envoyÃ©s',
+	            content : 'Mails envoyés',
 	            position : 'bottom-right'
 	        })
 		}
@@ -150,7 +150,7 @@ var nbTo = 0;
             		
             	</div>
             	<div class="listview-outlook" id="listto" style="margin-left:10px;float:left;height:200px;width:30%;overflow:auto;border-style:solid;border-width:2px;border-color:#f5923D;">
-            		SÃ©lectionnÃ©s
+            		Sélectionnés
             	</div>
             <div style="clear:both;"></div>
             <br>
@@ -170,11 +170,11 @@ var nbTo = 0;
 }
 else
 {
-    echo 'AccÃ¨s rÃ©servÃ© aux administrateurs';
+    echo 'AccÃ¨s réservé aux administrateurs';
 }
 }
 else
 {
-    echo 'AccÃ¨s direct non autorisÃ©';
+    echo 'AccÃ¨s direct non autorisé';
 }
 ?>

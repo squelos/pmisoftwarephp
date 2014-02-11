@@ -36,10 +36,10 @@ include_once("includes/stats_json.php");
         var chart = new google.visualization.PieChart(document.getElementById('ballLevel_chart'));
         chart.draw(data, options);
 
-        //Chart cat√©gorie
+        //Chart catÈgorie
         <?php echo $category; ?>
         // Set chart options
-        var options = {'title':'Cat√©gorie des joueurs',
+        var options = {'title':'CatÈgorie des joueurs',
        					'titleTextStyle':{'fontSize':25},
     					'pieHole':0.4,
     					'legend':{
@@ -58,7 +58,7 @@ include_once("includes/stats_json.php");
         //Chart sexe
         <?php echo $sexe; ?>
         // Set chart options
-        var options = {'title':'R√©partition Hommes/Femmes',
+        var options = {'title':'RÈpartition Hommes/Femmes',
        					'titleTextStyle':{'fontSize':25},
     					'pieHole':0.4,
     					'legend':{
@@ -98,12 +98,12 @@ include_once("includes/stats_json.php");
         /*var data = google.visualization.arrayToDataTable([
 					['Terrain', '1', '2', '3'{ role: 'annotation' } ],
 					['Loisir','163','191','171',''],
-					['Comp√©tition','184','180','237',''],
+					['CompÈtition','184','180','237',''],
 					['Ecole de Tennis','196','212','173',''],
 					['Entra√Ænement','3','1','15',''],])*/
 
 
-        var options = {'title':'Terrain selon les cat√©gories',
+        var options = {'title':'Terrain selon les catÈgories',
        					'titleTextStyle':{'fontSize':25},
     					'legend':{
     						'position':'top',

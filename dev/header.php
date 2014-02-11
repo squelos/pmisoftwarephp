@@ -33,6 +33,7 @@ include_once('includes/functions.php');
     <script src="js/core.js"></script>
 		
     <title>Tennis Club Portois</title>
+	<meta charset="UTF-8">
 </head>
 <body class="metro">
     <header class="bg-dark"></header>

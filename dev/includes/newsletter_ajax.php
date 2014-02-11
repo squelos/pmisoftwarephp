@@ -1,7 +1,7 @@
 <?php
 @session_start();
 include('functions.php');
-
+include('../mail/class.phpmailer.php');
 $action = cleanGetVar($_GET['action']);
 
 if ($action=="listplayer")
@@ -69,14 +69,14 @@ if ($action =="playerFromCateg")
 if ($action=="sendmail")
 {
 	$message = $_GET['m'];
-	$to = $_GET['to'];
-
-	$subject = "Newsletter TCP - ".$date('d/m/Y');
+	//$to = $_GET['to'];
+	$to = "maxime.bauer@viacesi.fr";
+	$subject = "Newsletter TCP - ".date('d/m/Y');
 	$db = new db();
-	$query = $db->query("SELECT email FROM PlayerJeu WHERE ID=".$to,"get mail address");
-	$mail = mssql_result($query, 0, 'email');
+	//$query = $db->query("SELECT email FROM PlayerJeu WHERE ID=".$to,"get mail address");
+	//$mail = mssql_result($query, 0, 'email');
 
 	$message = $message."<br><br><br><p><font size='2'>Afin de vous désabonner de cette newsletter merci de suivre ce <a href='#'>lien</a></font>";
 	
-	sendMail($to,$subject,$message);
+	mailSend($to,$subject,$message);
 }

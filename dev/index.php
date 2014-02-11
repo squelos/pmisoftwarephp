@@ -1,5 +1,5 @@
 <?php
-
+//phpinfo();
 include_once('includes/functions.php');
 include_once('header.php');
 
@@ -27,7 +27,7 @@ include_once('header.php');
                     {
 				?>
 
-                <div class="example">
+                <!--<div class="example">
 					<?php
                         $db = new db();
 
@@ -46,7 +46,7 @@ include_once('header.php');
                     ?>
 					<p>Dump des sessions : <b><?php print_r($_SESSION);?></b></p>
 					<p>mail : <?php //mailSend("frederic.hilpert@gmail.com", "test", "test <b>test</b>"); ?></p>
-                </div>
+                </div>-->
                 <?php
                     }
                 ?>

@@ -28,7 +28,7 @@ var cal;
             <div class="page-region-content">
                 <h1>
                     <a href="<?= $_SERVER['HTTP_REFERER']; ?>"><i class="icon-arrow-left-3 fg-darker smaller"></i></a>
-                    RÃ©servation
+                    Réservation
                 </h1>
                 
                 <div class="example" id="content">

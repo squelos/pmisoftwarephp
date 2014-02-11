@@ -16,14 +16,14 @@ include('db.php');
  function cleanGetVar($inputVar)
  {
    //$inputVar = mysql_real_escape_string($inputVar); //Obsolète a partir de php 5.5.0
-   $inputVar = htmlspecialchars($inputVar, ENT_IGNORE, 'utf-8');
+   //$inputVar = htmlspecialchars($inputVar, 'utf-8');
    $inputVar = strip_tags($inputVar);
    $inputVar = stripslashes($inputVar);
    return $inputVar; //enfait la c'est outputVar, mais bon on fais du PHP...
  }
  
  function mailSend($to, $subject, $content){
- 	include_once 'mail/class.phpmailer.php';
+ 	@include_once 'mail/class.phpmailer.php';
  	$mail = new PHPMailer(true); // the true param means it will throw exceptions on errors, which we need to catch
  	
  	$mail->IsSMTP(); // telling the class to use SMTP

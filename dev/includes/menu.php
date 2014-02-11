@@ -2,7 +2,7 @@
 <nav class="sidebar" style="width:275px;position:absolute; padding-top:100px; padding-left: 10px;">
 <ul>
 <li ><a href="index.php"><i class="icon-home"></i>Accueil</a></li>
-<li ><a href="booking.php?p=fields"><i class="icon-calendar"></i>Réservation</a></li>
+<li ><a href="booking.php?p=fields"><i class="icon-calendar"></i>R�servation</a></li>
 <!--<li ><a href="news.php"><i class="icon-newspaper"></i>Actualités</a></li>-->
 
 <?php if(isset($_SESSION['isConnected']) === true){ ?>

@@ -70,7 +70,7 @@ var isAdmin = false;
 
                 if (todaysEvents.length>0)
                 {
-                   $("#notifDiv").html('Cr√©neau indisponible');
+                   $("#notifDiv").html('CrÈneau indisponible');
                    notifyUser();
                    fetchEvents();
                 }
@@ -219,7 +219,7 @@ var isAdmin = false;
 
                  if (todaysEvents.length>1)
                  {
-                    $("#notifDiv").html('Cr√©neau indisponible');
+                    $("#notifDiv").html('CrÈneau indisponible');
                     notifyUser();
                     fetchEvents();
                  }
@@ -238,7 +238,7 @@ var isAdmin = false;
                               flat: true,
                               padding : 20,
                               title: 'Confirmation', 
-                              content : 'Souhaitez-vous appliquer la modification √† un seul √©v√©nement ou √† toute la collection ?<br><br><div style="margin:auto;text-align:center;"><input type="submit" value="Unique" onclick="upStart(\'unique\',\''+start+'\',\''+end+'\',\''+id+'\');" />    <input type="submit" value="Tous" onclick="upStart(\'all\',\''+start+'\',\''+end+'\',\''+id+'\');" /></div>',
+                              content : 'Souhaitez-vous appliquer la modification √† un seul ÈvÈnement ou √† toute la collection ?<br><br><div style="margin:auto;text-align:center;"><input type="submit" value="Unique" onclick="upStart(\'unique\',\''+start+'\',\''+end+'\',\''+id+'\');" />    <input type="submit" value="Tous" onclick="upStart(\'all\',\''+start+'\',\''+end+'\',\''+id+'\');" /></div>',
                               sysButtons:{
                                   btnClose : true
                               }  
@@ -298,7 +298,7 @@ var isAdmin = false;
                     flat: true,
                     padding : 20,
                     title: 'Confirmation', 
-                    content : 'Souhaitez-vous appliquer la modification √† un seul √©v√©nement ou √† toute la collection ?<br><br><div style="margin:auto;text-align:center;"><input type="submit" value="Unique" onclick="del(\'unique\',\''+selectedEvent+'\');" />    <input type="submit" value="Tous" onclick="del(\'all\',\''+selectedEvent+'\');" /></div>',
+                    content : 'Souhaitez-vous appliquer la modification √† un seul ÈvÈnement ou √† toute la collection ?<br><br><div style="margin:auto;text-align:center;"><input type="submit" value="Unique" onclick="del(\'unique\',\''+selectedEvent+'\');" />    <input type="submit" value="Tous" onclick="del(\'all\',\''+selectedEvent+'\');" /></div>',
                     sysButtons:{
                         btnClose : true
                     }
@@ -386,17 +386,17 @@ var isAdmin = false;
     	{
     		//Aucune erreur
     		case "0":
-    			content = "Ajout effectu√©.";
+    			content = "Ajout effectuÈ.";
                 fetchEvents();
                 $("#infoBook").hide();
     		break;
     		//Erreur d'autorisation
     		case "1":
-    			content = "Erreur : Vous n'avez pas les autorisations n√©cessaires.";
+    			content = "Erreur : Vous n'avez pas les autorisations nÈcessaires.";
     		break;
     		//Erreur de quota
     		case "2":
-	    		content = "Erreur : Vous avez d√©j√† une r√©servation cette semaine.";
+	    		content = "Erreur : Vous avez dÈj√† une rÈservation cette semaine.";
     		break;
     		//Erreur inconnue
     		case "3":
@@ -458,7 +458,7 @@ var isAdmin = false;
 	    <div class="page-region-content">
 	   		<h1>
                 <a href="<?= $_SERVER['HTTP_REFERER']; ?>"><i class="icon-arrow-left-3 fg-darker smaller"></i></a>
-                R√©servation - Court n¬∞<?php echo $_GET['field']; ?>
+                RÈservation - Court n∞<?php echo $_GET['field']; ?>
             </h1>
             <div id="notifDiv" style="display:none;"></div>
            <!--<div id="notifDiv" ></div>-->
@@ -518,7 +518,7 @@ var isAdmin = false;
                 if ($_GET['field']=="1")
                 {
                     echo '<div style="float:left">
-                    	<input type="checkbox" id="camera" name="video" style="vertical-align:middle;"> S√©ance film√©e
+                    	<input type="checkbox" id="camera" name="video" style="vertical-align:middle;"> SÈance filmÈe
                     </div>';
                 }
                 ?>
@@ -527,17 +527,17 @@ var isAdmin = false;
                 if ($_SESSION['isAdmin']==true)
                 {
                     echo '<div id="recurrent" style="display:none;width:90%;">
-                            <input type="checkbox" id="checkRecurrent" style="vertical-align:middle;" onChange="showRecurrent(this);">R√©servation r√©currente
+                            <input type="checkbox" id="checkRecurrent" style="vertical-align:middle;" onChange="showRecurrent(this);">RÈservation rÈcurrente
                             </div>
                            <div id="recurrentDate"  style="display:none;">
-                           Nom r√©servation :
+                           Nom rÈservation :
                            <input type="text" id="bookName" size=23/><br>
                            <select id="bookNameSelect" style="margin-left:129px;">
                                 <option value=" "></option>
                                 <option value="√âclairage">√âclairage</option>
-                                <option value="Entra√Ænement √©quipe 1">Entra√Ænement √©quipe 1</option>
+                                <option value="Entra√Ænement Èquipe 1">Entra√Ænement Èquipe 1</option>
                                 <option value="Entra√Ænement adultes">Entra√Ænement adultes</option>
-                                <option value="Sport adapt√©">Sport adapt√©</option>
+                                <option value="Sport adaptÈ">Sport adaptÈ</option>
                                 <option value="Match amical">Match amical</option>
                                 <option value="Stage">Stage</option>
                                 <option value="√âcole de tennis">√âcole de tennis</option>
@@ -564,7 +564,7 @@ var isAdmin = false;
                 <br>
                 <br>
                 <div id="newEvent">
-                    <input id='connectsubmit' onClick="validBook()" type="submit" value="R√©server" >
+                    <input id='connectsubmit' onClick="validBook()" type="submit" value="RÈserver" >
                 </div>
                 <div id="modifyEvent" style="display:none;">
                     <input id="update" onClick="updateEvent();" type="submit" value="Modifier" />
@@ -600,5 +600,5 @@ var d = new Date();
 }
 else
 {
-    echo 'Acc√®s direct non autoris√©';
+    echo 'Acc√®s direct non autorisÈ';
 }
